@@ -1,21 +1,19 @@
 package com.agilejava.maven.plugins.overview;
 
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.Shape;
-import java.awt.geom.Ellipse2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.imageio.ImageIO;
-
+import edu.uci.ics.jung.graph.ArchetypeEdge;
+import edu.uci.ics.jung.graph.ArchetypeVertex;
+import edu.uci.ics.jung.graph.DirectedGraph;
+import edu.uci.ics.jung.graph.Vertex;
+import edu.uci.ics.jung.graph.decorators.EdgeStringer;
+import edu.uci.ics.jung.graph.decorators.VertexPaintFunction;
+import edu.uci.ics.jung.graph.decorators.VertexShapeFunction;
+import edu.uci.ics.jung.graph.decorators.VertexStringer;
+import edu.uci.ics.jung.graph.impl.DirectedSparseEdge;
+import edu.uci.ics.jung.graph.impl.DirectedSparseGraph;
+import edu.uci.ics.jung.graph.impl.DirectedSparseVertex;
+import edu.uci.ics.jung.visualization.PluggableRenderer;
+import edu.uci.ics.jung.visualization.VisualizationViewer;
+import edu.uci.ics.jung.visualization.contrib.KKLayout;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.factory.ArtifactFactory;
 import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
@@ -31,19 +29,16 @@ import org.apache.maven.shared.dependency.tree.DependencyTree;
 import org.apache.maven.shared.dependency.tree.DependencyTreeBuilder;
 import org.apache.maven.shared.dependency.tree.DependencyTreeBuilderException;
 
-import edu.uci.ics.jung.graph.ArchetypeVertex;
-import edu.uci.ics.jung.graph.DirectedGraph;
-import edu.uci.ics.jung.graph.Vertex;
-import edu.uci.ics.jung.graph.decorators.VertexColorFunction;
-import edu.uci.ics.jung.graph.decorators.VertexPaintFunction;
-import edu.uci.ics.jung.graph.decorators.VertexShapeFunction;
-import edu.uci.ics.jung.graph.decorators.VertexStringer;
-import edu.uci.ics.jung.graph.impl.DirectedSparseEdge;
-import edu.uci.ics.jung.graph.impl.DirectedSparseGraph;
-import edu.uci.ics.jung.graph.impl.DirectedSparseVertex;
-import edu.uci.ics.jung.visualization.PluggableRenderer;
-import edu.uci.ics.jung.visualization.VisualizationViewer;
-import edu.uci.ics.jung.visualization.contrib.KKLayout;
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.geom.Ellipse2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -55,16 +50,19 @@ public class MavenOverviewPlugin extends AbstractMojo {
     /**
      * @parameter expression="${basedir}/target/${project.artifactId}.png"
      */
+    @SuppressWarnings({"UnusedDeclaration"})
     private File outputFile;
 
     /**
      * @parameter expression="${project}"
      */
+    @SuppressWarnings({"UnusedDeclaration"})
     private MavenProject project;
 
     /**
      * @parameter expression="${localRepository}"
      */
+    @SuppressWarnings({"UnusedDeclaration"})
     private ArtifactRepository localRepository;
 
     /**
@@ -114,6 +112,7 @@ public class MavenOverviewPlugin extends AbstractMojo {
     /**
      * @component
      */
+    @SuppressWarnings({"UnusedDeclaration"})
     private ArtifactCollector collector;
 
     /**
@@ -124,7 +123,20 @@ public class MavenOverviewPlugin extends AbstractMojo {
     /**
      * @component
      */
+    @SuppressWarnings({"UnusedDeclaration"})
     private DependencyTreeBuilder dependencyTreeBuilder;
+
+    /**
+     * Suppressed scopes.
+     *
+     * Scopes that are not supposed to be shown on graph as edge labels.
+     */
+    private List<String> suppressedScopes;
+
+    public MavenOverviewPlugin() {
+        suppressedScopes = new ArrayList<String>();
+        suppressedScopes.add("compile");
+    }
 
     private DependencyTree resolveProject() {
         try {
@@ -139,7 +151,6 @@ public class MavenOverviewPlugin extends AbstractMojo {
 
     public void execute() throws MojoExecutionException, MojoFailureException {
         DependencyTree dependencyTree = resolveProject();
-        List<Artifact> artifacts = dependencyTree.getArtifacts();
         DependencyNode node = dependencyTree.getRootNode();
         if (!outputFile.exists()) {
             outputFile.getParentFile().mkdirs();
@@ -147,7 +158,7 @@ public class MavenOverviewPlugin extends AbstractMojo {
         getLog().info("Preparing graph.");
         DirectedGraph graph = new DirectedSparseGraph();
         Map<Artifact, Vertex> processed = new HashMap<Artifact, Vertex>();
-        Vertex vertex = processDependencies(node, graph, processed);
+        processDependencies(node, graph, processed);
         // TreeLayout layout = new TreeLayout(graph);
         // DAGLayout layout = new DAGLayout(graph);
         // SpringLayout layout = new SpringLayout(graph);
@@ -188,7 +199,7 @@ public class MavenOverviewPlugin extends AbstractMojo {
         renderer.setVertexShapeFunction(new VertexShapeFunction() {
             public Shape getShape(Vertex vertex) {
                 ArtifactVertex artifactVertex = (ArtifactVertex) vertex;
-                double size = 20;
+                double size;
                 switch (artifactVertex.getDistance()) {
                 case 0:
                     size = 40;
@@ -204,6 +215,21 @@ public class MavenOverviewPlugin extends AbstractMojo {
                 }
                 return new Ellipse2D.Double(-(size / 2), -(size / 2), size,
                         size);
+            }
+        });
+        renderer.setEdgeStringer(new EdgeStringer() {
+            public String getLabel(ArchetypeEdge archetypeEdge) {
+                if (archetypeEdge instanceof DependencyEdge) {
+                    DependencyEdge edge = (DependencyEdge) archetypeEdge;
+                    String scope = edge.toString();
+                    if (!suppressedScopes.contains(scope)) {
+                        return scope;
+                    } else {
+                        return null;
+                    }
+                } else {
+                    return null;
+                }
             }
         });
         VisualizationViewer viewer = new VisualizationViewer(layout, renderer,
@@ -252,8 +278,8 @@ public class MavenOverviewPlugin extends AbstractMojo {
             for (Object child : node.getChildren()) {
                 DependencyNode next = (DependencyNode) child;
                 processDependencies(next, graph, processed);
-                graph.addEdge(new DependencyEdge(vertex, processed.get(next
-                        .getArtifact())));
+                Artifact processedArtifact = next.getArtifact();
+                graph.addEdge(new DependencyEdge(vertex, processed.get(processedArtifact), processedArtifact.getScope()));
             }
             return vertex;
         } else {
@@ -302,6 +328,7 @@ public class MavenOverviewPlugin extends AbstractMojo {
     }
 
     private static class DependencyEdge extends DirectedSparseEdge {
+        private String label;
 
         public DependencyEdge(ArtifactVertex vertex1, ArtifactVertex vertex2) {
             super(vertex1, vertex2);
@@ -311,6 +338,14 @@ public class MavenOverviewPlugin extends AbstractMojo {
             super(vertex1, vertex2);
         }
 
+        public DependencyEdge(Vertex vertex1, Vertex vertex2, String label) {
+            super(vertex1, vertex2);
+            this.label = label;
+        }
+
+        public String toString() {
+            return label != null ? label : super.toString();
+        }
     }
 
 }
