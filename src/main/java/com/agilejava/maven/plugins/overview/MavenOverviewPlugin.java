@@ -37,6 +37,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -47,6 +48,16 @@ import java.util.Map;
  */
 public class MavenOverviewPlugin extends AbstractMojo {
 
+    /**
+     * The projects in the reactor for aggregation report.
+     *
+     * <p>Note: This is passed by Maven and must not be configured by the user.</p>
+     *
+     * @parameter expression="${reactorProjects}"
+     * @readonly
+     */
+    private List reactorProjects;
+    
     /**
      * @parameter expression="${basedir}/target/${project.artifactId}.png"
      */
@@ -139,6 +150,10 @@ public class MavenOverviewPlugin extends AbstractMojo {
     }
 
     private DependencyTree resolveProject() {
+        return resolveProject(project);
+    }
+
+    private DependencyTree resolveProject(MavenProject project) {
         try {
             return dependencyTreeBuilder
                     .buildDependencyTree(project, localRepository, factory,
@@ -148,7 +163,7 @@ public class MavenOverviewPlugin extends AbstractMojo {
             return null;
         }
     }
-
+    
     public void execute() throws MojoExecutionException, MojoFailureException {
         DependencyTree dependencyTree = resolveProject();
         DependencyNode node = dependencyTree.getRootNode();
@@ -159,6 +174,13 @@ public class MavenOverviewPlugin extends AbstractMojo {
         DirectedGraph graph = new DirectedSparseGraph();
         Map<Artifact, Vertex> processed = new HashMap<Artifact, Vertex>();
         processDependencies(node, graph, processed);
+        Iterator iterator = reactorProjects.iterator();
+        while (iterator.hasNext()) {
+            MavenProject sub = (MavenProject) iterator.next();
+            dependencyTree = resolveProject(sub);
+            node = dependencyTree.getRootNode();
+            processDependencies(node, graph, processed);
+        }
         // TreeLayout layout = new TreeLayout(graph);
         // DAGLayout layout = new DAGLayout(graph);
         // SpringLayout layout = new SpringLayout(graph);
