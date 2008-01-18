@@ -49,31 +49,41 @@ import java.util.Map;
 public class MavenOverviewPlugin extends AbstractMojo {
 
     /**
+     * Artifacts to be excluded. Regular expressions matching the full artifact
+     * designation.
+     * 
+     * @parameter expression="${excludes}"
+     */
+    private String excludes = "";
+
+    /**
      * The projects in the reactor for aggregation report.
-     *
-     * <p>Note: This is passed by Maven and must not be configured by the user.</p>
-     *
+     * 
+     * <p>
+     * Note: This is passed by Maven and must not be configured by the user.
+     * </p>
+     * 
      * @parameter expression="${reactorProjects}"
      * @readonly
      */
     private List reactorProjects;
-    
+
     /**
      * @parameter expression="${basedir}/target/${project.artifactId}.png"
      */
-    @SuppressWarnings({"UnusedDeclaration"})
+    @SuppressWarnings( { "UnusedDeclaration" })
     private File outputFile;
 
     /**
      * @parameter expression="${project}"
      */
-    @SuppressWarnings({"UnusedDeclaration"})
+    @SuppressWarnings( { "UnusedDeclaration" })
     private MavenProject project;
 
     /**
      * @parameter expression="${localRepository}"
      */
-    @SuppressWarnings({"UnusedDeclaration"})
+    @SuppressWarnings( { "UnusedDeclaration" })
     private ArtifactRepository localRepository;
 
     /**
@@ -123,7 +133,7 @@ public class MavenOverviewPlugin extends AbstractMojo {
     /**
      * @component
      */
-    @SuppressWarnings({"UnusedDeclaration"})
+    @SuppressWarnings( { "UnusedDeclaration" })
     private ArtifactCollector collector;
 
     /**
@@ -134,12 +144,12 @@ public class MavenOverviewPlugin extends AbstractMojo {
     /**
      * @component
      */
-    @SuppressWarnings({"UnusedDeclaration"})
+    @SuppressWarnings( { "UnusedDeclaration" })
     private DependencyTreeBuilder dependencyTreeBuilder;
 
     /**
      * Suppressed scopes.
-     *
+     * 
      * Scopes that are not supposed to be shown on graph as edge labels.
      */
     private List<String> suppressedScopes;
@@ -163,7 +173,7 @@ public class MavenOverviewPlugin extends AbstractMojo {
             return null;
         }
     }
-    
+
     public void execute() throws MojoExecutionException, MojoFailureException {
         DependencyTree dependencyTree = resolveProject();
         DependencyNode node = dependencyTree.getRootNode();
@@ -173,13 +183,13 @@ public class MavenOverviewPlugin extends AbstractMojo {
         getLog().info("Preparing graph.");
         DirectedGraph graph = new DirectedSparseGraph();
         Map<Artifact, Vertex> processed = new HashMap<Artifact, Vertex>();
-        processDependencies(node, graph, processed);
+        processDependencies(node, graph, processed, false);
         Iterator iterator = reactorProjects.iterator();
         while (iterator.hasNext()) {
             MavenProject sub = (MavenProject) iterator.next();
             dependencyTree = resolveProject(sub);
             node = dependencyTree.getRootNode();
-            processDependencies(node, graph, processed);
+            processDependencies(node, graph, processed, false);
         }
         // TreeLayout layout = new TreeLayout(graph);
         // DAGLayout layout = new DAGLayout(graph);
@@ -291,17 +301,28 @@ public class MavenOverviewPlugin extends AbstractMojo {
     }
 
     private Vertex processDependencies(DependencyNode node,
-            DirectedGraph graph, Map<Artifact, Vertex> processed) {
+            DirectedGraph graph, Map<Artifact, Vertex> processed, boolean module) {
         Artifact artifact = node.getArtifact();
         if (!processed.containsKey(artifact)) {
-            Vertex vertex = new ArtifactVertex(artifact, node.getDepth());
+            Vertex vertex = new ArtifactVertex(artifact, node.getDepth(),
+                    module);
             vertex = graph.addVertex(vertex);
             processed.put(artifact, vertex);
             for (Object child : node.getChildren()) {
                 DependencyNode next = (DependencyNode) child;
-                processDependencies(next, graph, processed);
-                Artifact processedArtifact = next.getArtifact();
-                graph.addEdge(new DependencyEdge(vertex, processed.get(processedArtifact), processedArtifact.getScope()));
+                Artifact nextArtifact = next.getArtifact();
+                boolean match = false;
+                String[] excluded = excludes.split(",");
+                for (int i = 0; i < excluded.length; i++) {
+                    if (excluded[i].trim().length() > 0) {
+                        match |= nextArtifact.getId().contains(excluded[i]);
+                    }
+                }
+                if (!match) {
+                    processDependencies(next, graph, processed, module);
+                    graph.addEdge(new DependencyEdge(vertex, processed
+                            .get(nextArtifact), nextArtifact.getScope()));
+                }
             }
             return vertex;
         } else {
@@ -317,10 +338,13 @@ public class MavenOverviewPlugin extends AbstractMojo {
 
         private int distance;
 
-        public ArtifactVertex(Artifact artifact, int distance) {
+        private boolean module;
+
+        public ArtifactVertex(Artifact artifact, int distance, boolean module) {
             super();
             this.artifact = artifact;
             this.distance = distance;
+            this.module = module;
         }
 
         public Artifact getArtifact() {
