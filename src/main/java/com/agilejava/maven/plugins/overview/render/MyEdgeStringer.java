@@ -7,9 +7,9 @@ import com.agilejava.maven.plugins.overview.vo.DependencyEdge;
 import java.util.List;
 
 public class MyEdgeStringer implements EdgeStringer {
-    private List<String> suppressedScopes;
+    private String suppressedScopes;
 
-    public MyEdgeStringer(List<String> suppressedScopes) {
+    public MyEdgeStringer(String suppressedScopes) {
         this.suppressedScopes = suppressedScopes;
     }
 

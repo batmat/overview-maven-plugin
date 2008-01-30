@@ -25,7 +25,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -63,9 +62,9 @@ public class MavenOverviewPlugin extends AbstractMojo {
      * <p/>
      * Scopes that are not supposed to be shown on graph as edge labels.
      * <p/>
-     * TODO: provide getter and setter (with parsing of string like: "a,b")
+     * @parameter expression="${suppressedScopes}"
      */
-    private List<String> suppressedScopes;
+    private String suppressedScopes;
 
     /**
      * The projects in the reactor for aggregation report.
@@ -159,8 +158,7 @@ public class MavenOverviewPlugin extends AbstractMojo {
     private DependencyTreeBuilder dependencyTreeBuilder;
 
     public MavenOverviewPlugin() {
-        suppressedScopes = new ArrayList<String>();
-        suppressedScopes.add("compile");
+        suppressedScopes = "compile";
     }
 
     public void execute() throws MojoExecutionException, MojoFailureException {
