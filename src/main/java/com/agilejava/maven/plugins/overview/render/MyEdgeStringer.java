@@ -1,10 +1,8 @@
 package com.agilejava.maven.plugins.overview.render;
 
-import edu.uci.ics.jung.graph.decorators.EdgeStringer;
-import edu.uci.ics.jung.graph.ArchetypeEdge;
 import com.agilejava.maven.plugins.overview.vo.DependencyEdge;
-
-import java.util.List;
+import edu.uci.ics.jung.graph.ArchetypeEdge;
+import edu.uci.ics.jung.graph.decorators.EdgeStringer;
 
 public class MyEdgeStringer implements EdgeStringer {
     private String suppressedScopes;
