@@ -1,0 +1,26 @@
+ ------
+ Introduction
+ ------
+ Hubert Iwaniuk
+ ------
+ 02 Feb 2008
+ ------
+
+
+Maven Overview Plugin
+
+  A simple Maven plugin, creating a diagram of all dependencies. (The entire transitive closure.)
+
+* Goals Overview
+
+  The Overview Plugin has one goal:
+
+  * {{{generate-mojo.html}maven-overview-plugin:generate}} Generates graph of project dependencies.
+
+* Usage
+
+  Instructions on how to use the Plugin Name can be found {{{usage.html}here}}.
+
+* Examples
+
+  To see how to use plugin from command line go {{{examples/command.html}here}}.

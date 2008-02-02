@@ -26,8 +26,14 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.ResourceBundle;
+import java.util.Locale;
 
 /**
+ * MavenOverviewPlugin.
+ * <p/>
+ * Generates graph of project dependencies.
+ *
  * @author Wilfred Springer
  * @author Hubert Iwaniuk
  * @goal generate
@@ -43,16 +49,25 @@ public class MavenOverviewPlugin extends AbstractMojo {
     private String excludes = "";
 
     /**
-     * @parameter expression="${width}" default-value="1200"
+     * Rendered graph width in pixels.
+     * Default value: 400
+     *
+     * @parameter expression="${width}" default-value="400"
      */
-    private int width = 1200;
+    private int width = 400;
 
     /**
-     * @parameter expression="${height}" default-value="1200"
+     * Rendered graph height in pixels.
+     * Default value: 400
+     *
+     * @parameter expression="${height}" default-value="400"
      */
-    private int height = 1200;
+    private int height = 400;
 
     /**
+     * Should vertex name be full artifact ID.
+     * Default value: false
+     * 
      * @parameter expression="${vertexFullLabel}" default-value="false"
      */
     private boolean vertexFullLabel = false;
@@ -62,6 +77,7 @@ public class MavenOverviewPlugin extends AbstractMojo {
      * <p/>
      * Scopes that are not supposed to be shown on graph as edge labels.
      * <p/>
+     *
      * @parameter expression="${suppressedScopes}"
      */
     private String suppressedScopes;
@@ -75,25 +91,28 @@ public class MavenOverviewPlugin extends AbstractMojo {
      * @parameter expression="${reactorProjects}"
      * @readonly
      */
-    @SuppressWarnings({"UnusedDeclaration", "MismatchedQueryAndUpdateOfCollection"})
     private List reactorProjects;
 
     /**
+     * File to save rendered graph to.
+     * Default value: ${basedir}/target/${project.artifactId}.png
+     * 
      * @parameter expression="${basedir}/target/${project.artifactId}.png"
      */
-    @SuppressWarnings({"UnusedDeclaration"})
     private File outputFile;
 
     /**
+     * Maven Project.
+     * Default value: ${project}
      * @parameter expression="${project}"
      */
-    @SuppressWarnings({"UnusedDeclaration"})
     private MavenProject project;
 
     /**
+     * Local Maven repository.
+     * 
      * @parameter expression="${localRepository}"
      */
-    @SuppressWarnings({"UnusedDeclaration"})
     private ArtifactRepository localRepository;
 
     /**
@@ -143,7 +162,6 @@ public class MavenOverviewPlugin extends AbstractMojo {
     /**
      * @component
      */
-    @SuppressWarnings({"UnusedDeclaration"})
     private ArtifactCollector collector;
 
     /**
@@ -154,18 +172,29 @@ public class MavenOverviewPlugin extends AbstractMojo {
     /**
      * @component
      */
-    @SuppressWarnings({"UnusedDeclaration"})
     private DependencyTreeBuilder dependencyTreeBuilder;
+
+    /**
+     * Plugin Information
+     */
+    private static ResourceBundle info = ResourceBundle.getBundle("plugin", Locale.getDefault());
+    private String pluginName = info.getString("plugin.name");
+    private String pluginVersion = info.getString("plugin.version");
+    private String pluginBuilder = info.getString("plugin.buildBy");
 
     public MavenOverviewPlugin() {
         suppressedScopes = "compile";
     }
 
     public void execute() throws MojoExecutionException, MojoFailureException {
+        getLog().debug(pluginName + " v" + pluginVersion + " build by " + pluginBuilder);
         if (!outputFile.exists()) {
+            getLog().debug("Creating outputFile: " + outputFile.getAbsolutePath());
             outputFile.getParentFile().mkdirs();
+            getLog().info("Created outputFile: " + outputFile);
         }
-        getLog().info("Preparing graph.");
+
+        getLog().debug("Collecting data");
         DependencyProcessor dependencyProcessor = new DependencyProcessor(
                 excludes,
                 dependencyTreeBuilder,
@@ -175,8 +204,10 @@ public class MavenOverviewPlugin extends AbstractMojo {
                 collector,
                 this);
 
+        getLog().debug("Generating graph");
         DirectedGraph graph = dependencyProcessor.createGraph(project, reactorProjects);
 
+        getLog().debug("Rendering graph");
         // TreeLayout layout = new TreeLayout(graph);
         // DAGLayout layout = new DAGLayout(graph);
         // SpringLayout layout = new SpringLayout(graph);
@@ -197,11 +228,13 @@ public class MavenOverviewPlugin extends AbstractMojo {
         Graphics2D graphics = image.createGraphics();
 
         container.paintComponents(graphics);
-        getLog().info("Generating " + outputFile.getAbsolutePath());
+
+        getLog().debug("Writing image to " + outputFile.getAbsolutePath());
         try {
             ImageIO.write(image, "png", outputFile);
+            getLog().info("Graph at: " + outputFile);
         } catch (IOException ioe) {
-            getLog().error("Whoops.", ioe);
+            getLog().error("Couldn't write to: " + outputFile, ioe);
         }
     }
 

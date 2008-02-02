@@ -1,0 +1,1 @@
+ mvn com.agilejava.maven.plugins:maven-overview-plugin:1.0-SNAPSHOT:generate
