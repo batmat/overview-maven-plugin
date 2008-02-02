@@ -1,1 +1,15 @@
-TODO: provide usage information
+		---
+		Maven Overview Plugin - Usage
+		---
+		Hubert Iwaniuk
+		---
+		02 Feb 2008
+		---
+
+  One of the ways to use it would be by typing:
+
++---+
+mvn com.agilejava.maven.plugins:maven-overview-plugin:1.0-SNAPSHOT:generate
++---+
+
+  For the plugin itself, it creates the diagram shown below. The color indicates if the dependency distance. The artifact for which the diagram is created is rendered as a red dot. Direct dependencies are rendered orange. Brightness will increase if you start moving to the edges of the dependency graph. 

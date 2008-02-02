@@ -5,7 +5,7 @@
             <question>Question?</question>
             <answer>
                 <p>
-                    Answer
+                    You can ask us question usign our <a href="http://code.google.com/p/maven-overview-plugin/issues/list">issue tracker</a>.
                 </p>
             </answer>
         </faq>

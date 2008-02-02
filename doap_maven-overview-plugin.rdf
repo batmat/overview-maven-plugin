@@ -1,0 +1,49 @@
+<!--
+  ~ Copyright 2008 The Apache Software Foundation.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+--> 
+<rdf:RDF xml:lang="en" xmlns="http://usefulinc.com/ns/doap#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:asfext="http://projects.apache.org/ns/asfext#" xmlns:foaf="http://xmlns.com/foaf/0.1/">
+  <Project rdf:about="http://Maven.rdf.apache.org/">
+    <created>2008</created>
+    <license rdf:resource="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+    <name>Maven Overview Plugin</name>
+    <homepage rdf:resource="http://code.google.com/p/maven-overview-plugin/"/>
+    <asfext:pmc rdf:resource="http://code.google.com/p/maven-overview-plugin/"/>
+    <shortdesc>A simple Maven plugin, creating a diagram of all dependencies. (The entire transitive closure.)</shortdesc>
+    <description>A simple Maven plugin, creating a diagram of all dependencies. (The entire transitive closure.)</description>
+    <bug-database rdf:resource="http://code.google.com/p/maven-overview-plugin/issues/list"/>
+    <mailing-list rdf:resource="http://code.google.com/p/maven-overview-plugin//mail-lists.html"/>
+    <download-page rdf:resource="http://code.google.com/p/maven-overview-plugin//download.html"/>
+    <programming-language>Java</programming-language>
+    <category rdf:resource="http://projects.apache.org/category/null"/>
+    <repository>
+      <SVNRepository>
+        <location rdf:resource="http://maven-overview-plugin.googlecode.com/svn/trunk/"/>
+        <browse rdf:resource="http://code.google.com/p/maven-overview-plugin/source/browse/trunk/"/>
+      </SVNRepository>
+    </repository>
+    <maintainer>
+      <foaf:Person>
+        <foaf:name>Wilfred Springer</foaf:name>
+        <foaf:mbox rdf:resource="mailto:null"/>
+      </foaf:Person>
+    </maintainer>
+    <maintainer>
+      <foaf:Person>
+        <foaf:name>Hubert Iwaniuk</foaf:name>
+        <foaf:mbox rdf:resource="mailto:null"/>
+      </foaf:Person>
+    </maintainer>
+  </Project>
+</rdf:RDF>

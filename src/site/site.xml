@@ -13,8 +13,7 @@
         </menu>
 
         <menu name="Examples">
-            <item name="description1" href="examples/example-one.html"/>
-            <item name="description2" href="examples/example-two.html"/>
+            <item name="CommandLine" href="examples/command.html"/>
         </menu>
 
         <menu ref="reports"/>

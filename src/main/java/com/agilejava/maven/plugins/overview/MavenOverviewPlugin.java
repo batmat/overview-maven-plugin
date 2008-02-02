@@ -6,8 +6,7 @@ import com.agilejava.maven.plugins.overview.render.MyVertexPaintFunction;
 import com.agilejava.maven.plugins.overview.render.MyVertexShapeFunction;
 import com.agilejava.maven.plugins.overview.render.MyVertexStringer;
 import edu.uci.ics.jung.graph.DirectedGraph;
-import edu.uci.ics.jung.visualization.PluggableRenderer;
-import edu.uci.ics.jung.visualization.VisualizationViewer;
+import edu.uci.ics.jung.visualization.*;
 import edu.uci.ics.jung.visualization.contrib.KKLayout;
 import org.apache.maven.artifact.factory.ArtifactFactory;
 import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
@@ -67,7 +66,7 @@ public class MavenOverviewPlugin extends AbstractMojo {
     /**
      * Should vertex name be full artifact ID.
      * Default value: false
-     * 
+     *
      * @parameter expression="${vertexFullLabel}" default-value="false"
      */
     private boolean vertexFullLabel = false;
@@ -96,7 +95,7 @@ public class MavenOverviewPlugin extends AbstractMojo {
     /**
      * File to save rendered graph to.
      * Default value: ${basedir}/target/${project.artifactId}.png
-     * 
+     *
      * @parameter expression="${basedir}/target/${project.artifactId}.png"
      */
     private File outputFile;
@@ -104,13 +103,14 @@ public class MavenOverviewPlugin extends AbstractMojo {
     /**
      * Maven Project.
      * Default value: ${project}
+     *
      * @parameter expression="${project}"
      */
     private MavenProject project;
 
     /**
      * Local Maven repository.
-     * 
+     *
      * @parameter expression="${localRepository}"
      */
     private ArtifactRepository localRepository;
@@ -208,12 +208,7 @@ public class MavenOverviewPlugin extends AbstractMojo {
         DirectedGraph graph = dependencyProcessor.createGraph(project, reactorProjects);
 
         getLog().debug("Rendering graph");
-        // TreeLayout layout = new TreeLayout(graph);
-        // DAGLayout layout = new DAGLayout(graph);
-        // SpringLayout layout = new SpringLayout(graph);
-        // FRLayout layout = new FRLayout(graph);
         KKLayout layout = new KKLayout(graph);
-        // ISOMLayout layout = new ISOMLayout(graph);
         PluggableRenderer renderer = setupRenderer();
         VisualizationViewer viewer = new VisualizationViewer(layout, renderer,
                 new Dimension(width, height));
