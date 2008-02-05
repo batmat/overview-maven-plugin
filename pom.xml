@@ -22,13 +22,13 @@
     </prerequisites>
 
     <dependencies>
-<!--
-        <dependency>
-            <groupId>org.apache.maven.shared</groupId>
-            <artifactId>maven-shared-jar</artifactId>
-            <version>1.0</version>
-        </dependency>
--->
+        <!--
+                <dependency>
+                    <groupId>org.apache.maven.shared</groupId>
+                    <artifactId>maven-shared-jar</artifactId>
+                    <version>1.0</version>
+                </dependency>
+        -->
         <dependency>
             <groupId>org.apache.maven.shared</groupId>
             <artifactId>maven-dependency-tree</artifactId>
@@ -69,13 +69,13 @@
             <artifactId>maven-settings</artifactId>
             <version>2.0.4</version>
         </dependency>
-<!--
-        <dependency>
-            <groupId>commons-validator</groupId>
-            <artifactId>commons-validator</artifactId>
-            <version>1.2.0</version>
-        </dependency>
--->
+        <!--
+                <dependency>
+                    <groupId>commons-validator</groupId>
+                    <artifactId>commons-validator</artifactId>
+                    <version>1.2.0</version>
+                </dependency>
+        -->
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-model</artifactId>
@@ -101,14 +101,14 @@
             <artifactId>doxia-site-renderer</artifactId>
             <version>1.0-alpha-8</version>
         </dependency>
-<!--
-        <dependency>
-            <groupId>org.apache.maven.shared</groupId>
-            <artifactId>maven-plugin-testing-harness</artifactId>
-            <version>1.0-beta-1</version>
-            <scope>test</scope>
-        </dependency>
--->
+        <!--
+                <dependency>
+                    <groupId>org.apache.maven.shared</groupId>
+                    <artifactId>maven-plugin-testing-harness</artifactId>
+                    <version>1.0-beta-1</version>
+                    <scope>test</scope>
+                </dependency>
+        -->
     </dependencies>
 
     <!-- Build Settings -->
@@ -160,6 +160,15 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.agilejava.maven.plugins</groupId>
+                <artifactId>maven-overview-plugin</artifactId>
+                <configuration>
+                    <width>800</width>
+                    <height>800</height>
+                    <suppressedScopes/>
+                </configuration>
             </plugin>
         </plugins>
     </reporting>
