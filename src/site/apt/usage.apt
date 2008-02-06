@@ -6,10 +6,29 @@
 		02 Feb 2008
 		---
 
-  One of the ways to use it would be by typing:
+Installing
 
 +---+
-mvn com.agilejava.maven.plugins:maven-overview-plugin:1.0-SNAPSHOT:generate
+mvn install
 +---+
 
-  For the plugin itself, it creates the diagram shown below. The color indicates if the dependency distance. The artifact for which the diagram is created is rendered as a red dot. Direct dependencies are rendered orange. Brightness will increase if you start moving to the edges of the dependency graph. 
+Usage
+
+  Add following to you pom.xml
+
++---+
+    <reporting>
+        <plugins>
+            ...
+            <plugin>
+                <groupId>com.agilejava.maven.plugins</groupId>
+                <artifactId>maven-overview-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </reporting>
++---+
+
+  The color indicates if the dependency distance.
+  The artifact for which the diagram is created is rendered as a red dot.
+  Direct dependencies are rendered orange.
+  Brightness will increase if you start moving to the edges of the dependency graph.
