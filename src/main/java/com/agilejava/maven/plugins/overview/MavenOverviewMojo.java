@@ -6,8 +6,8 @@ import com.agilejava.maven.plugins.overview.render.MyVertexPaintFunction;
 import com.agilejava.maven.plugins.overview.render.MyVertexShapeFunction;
 import com.agilejava.maven.plugins.overview.render.MyVertexStringer;
 import edu.uci.ics.jung.graph.DirectedGraph;
-import edu.uci.ics.jung.visualization.PluggableRenderer;
-import edu.uci.ics.jung.visualization.VisualizationViewer;
+import edu.uci.ics.jung.visualization.*;
+import edu.uci.ics.jung.visualization.contrib.KKLayoutInt;
 import edu.uci.ics.jung.visualization.contrib.KKLayout;
 import org.apache.maven.artifact.factory.ArtifactFactory;
 import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
@@ -156,6 +156,7 @@ public class MavenOverviewMojo extends AbstractMavenReport {
     private String pluginName = info.getString("plugin.name");
     private String pluginVersion = info.getString("plugin.version");
     private String pluginBuilder = info.getString("plugin.buildBy");
+    private static final int ITERATIONS = 1000;
 
     public MavenOverviewMojo() {
         suppressedScopes = "compile";
@@ -248,10 +249,20 @@ public class MavenOverviewMojo extends AbstractMavenReport {
         DirectedGraph graph = dependencyProcessor.createGraph(getProject(), reactorProjects);
 
         getLog().debug("Rendering graph");
-        KKLayout layout = new KKLayout(graph);
+        Layout layout = new KKLayout(graph);
+        Dimension preferredSize = new Dimension(width, height);
+        layout.initialize(preferredSize);
+        layout.resize(preferredSize);
+        if (layout.isIncremental()) {
+            getLog().info("Incrementing graph");
+            for (int i = 0; i < ITERATIONS; i++) {
+                layout.advancePositions();
+            }
+        }
+
         PluggableRenderer renderer = setupRenderer();
         VisualizationViewer viewer = new VisualizationViewer(layout, renderer,
-                new Dimension(width, height));
+                preferredSize);
         viewer.setDoubleBuffered(false);
         viewer.setSize(width, height);
         viewer.setBackground(Color.WHITE);

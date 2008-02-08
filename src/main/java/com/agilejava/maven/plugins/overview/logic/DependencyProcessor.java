@@ -1,24 +1,26 @@
 package com.agilejava.maven.plugins.overview.logic;
 
-import edu.uci.ics.jung.graph.Vertex;
-import edu.uci.ics.jung.graph.DirectedGraph;
-import edu.uci.ics.jung.graph.impl.DirectedSparseGraph;
-import org.apache.maven.shared.dependency.tree.*;
-import org.apache.maven.artifact.Artifact;
-import org.apache.maven.artifact.resolver.ArtifactCollector;
-import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
-import org.apache.maven.artifact.factory.ArtifactFactory;
-import org.apache.maven.artifact.repository.ArtifactRepository;
-import org.apache.maven.project.MavenProject;
-import org.apache.maven.plugin.AbstractMojo;
-
-import java.util.Map;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import com.agilejava.maven.plugins.overview.vo.ArtifactVertex;
 import com.agilejava.maven.plugins.overview.vo.DependencyEdge;
+import edu.uci.ics.jung.graph.DirectedGraph;
+import edu.uci.ics.jung.graph.Vertex;
+import edu.uci.ics.jung.graph.impl.DirectedSparseGraph;
+import org.apache.maven.artifact.Artifact;
+import org.apache.maven.artifact.factory.ArtifactFactory;
+import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
+import org.apache.maven.artifact.repository.ArtifactRepository;
+import org.apache.maven.artifact.resolver.ArtifactCollector;
+import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.project.MavenProject;
+import org.apache.maven.shared.dependency.tree.DependencyNode;
+import org.apache.maven.shared.dependency.tree.DependencyTreeBuilder;
+import org.apache.maven.shared.dependency.tree.DependencyTreeBuilderException;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Logic of dependency processing.
@@ -103,7 +105,7 @@ public class DependencyProcessor {
             DirectedGraph graph,
             Map<Artifact, Vertex> processed
     ) {
-        return process(resolveProject(node).getRootNode(), graph, processed);
+        return process(resolveProject(node), graph, processed);
     }
 
     private Vertex process(DependencyNode node, DirectedGraph graph, Map<Artifact, Vertex> processed) {
@@ -135,13 +137,18 @@ public class DependencyProcessor {
         }
     }
 
-    private DependencyTree resolveProject(MavenProject project) {
+    private DependencyNode resolveProject(MavenProject project) {
         try {
             return dependencyTreeBuilder.buildDependencyTree(
                     project,
                     localRepository,
                     factory,
                     artifactMetadataSource,
+                    new ArtifactFilter() {
+                        public boolean include(Artifact artifact) {
+                            return true;
+                        }
+                    },
                     collector);
         } catch (DependencyTreeBuilderException e) {
             abstractMojo.getLog().error("Unable to build dependency tree.", e);
