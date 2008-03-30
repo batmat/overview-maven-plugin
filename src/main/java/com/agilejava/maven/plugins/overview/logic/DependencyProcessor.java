@@ -1,16 +1,13 @@
 package com.agilejava.maven.plugins.overview.logic;
 
 import com.agilejava.maven.plugins.overview.vo.ArtifactVertex;
-import com.agilejava.maven.plugins.overview.vo.DependencyEdge;
 import edu.uci.ics.jung.graph.DirectedGraph;
-import edu.uci.ics.jung.graph.Vertex;
 import edu.uci.ics.jung.graph.impl.DirectedSparseGraph;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.factory.ArtifactFactory;
 import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.resolver.ArtifactCollector;
-import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.shared.dependency.tree.DependencyNode;
@@ -82,14 +79,16 @@ public class DependencyProcessor {
      */
     public DirectedGraph createGraph(MavenProject project, List reactorProjects) {
         DirectedGraph graph = new DirectedSparseGraph();
-        Map<Artifact, Vertex> processed = new HashMap<Artifact, Vertex>();
+        Map<Artifact, ArtifactVertex> processed = new HashMap<Artifact, ArtifactVertex>();
 
         // Single project processing, in case of aggregate projects graph is empty.
+/*
         process(project,
                 graph,
                 processed
         );
 
+*/
         // For pom project, process all modules.
         for (Object reactorProject : reactorProjects) {
             process((MavenProject) reactorProject,
@@ -100,41 +99,17 @@ public class DependencyProcessor {
         return graph;
     }
 
-    private Vertex process(
+    private void process(
             MavenProject node,
             DirectedGraph graph,
-            Map<Artifact, Vertex> processed
+            Map<Artifact, ArtifactVertex> processed
     ) {
-        return process(resolveProject(node), graph, processed);
+        process(resolveProject(node), graph, processed);
     }
 
-    private Vertex process(DependencyNode node, DirectedGraph graph, Map<Artifact, Vertex> processed) {
-        Artifact artifact = node.getArtifact();
-        if (!processed.containsKey(artifact)) {
-            Vertex vertex = new ArtifactVertex(artifact, node.getDepth());
-            vertex = graph.addVertex(vertex);
-            processed.put(artifact, vertex);
-            for (Object child : node.getChildren()) {
-                DependencyNode next = (DependencyNode) child;
-                Artifact nextArtifact = next.getArtifact();
-
-                String id = nextArtifact.getId();
-                if (!excludes.contains(id)) {
-                    if (this.abstractMojo.getLog().isDebugEnabled())
-                        this.abstractMojo.getLog().debug("Including artifact: " + id);
-                    process(next, graph, processed);
-                    graph.addEdge(new DependencyEdge(vertex, processed.get(nextArtifact), nextArtifact.getScope()));
-                } else {
-                    if (this.abstractMojo.getLog().isDebugEnabled())
-                        this.abstractMojo.getLog().debug("Excluded artifact: " + id);
-                }
-            }
-            return vertex;
-        } else {
-            ArtifactVertex vertex = (ArtifactVertex) processed.get(artifact);
-            vertex.setDistance(Math.max(vertex.getDistance(), node.getDepth()));
-            return vertex;
-        }
+    private void process(DependencyNode node, DirectedGraph graph, Map<Artifact, ArtifactVertex> processed) {
+        DependencyExtractor extractor = DependencyExtractor.getInstance();
+        extractor.extractGraph(node, graph, processed);
     }
 
     private DependencyNode resolveProject(MavenProject project) {
@@ -144,15 +119,12 @@ public class DependencyProcessor {
                     localRepository,
                     factory,
                     artifactMetadataSource,
-                    new ArtifactFilter() {
-                        public boolean include(Artifact artifact) {
-                            return true;
-                        }
-                    },
+                    new MyArtifactFilter(excludes),
                     collector);
         } catch (DependencyTreeBuilderException e) {
             abstractMojo.getLog().error("Unable to build dependency tree.", e);
             return null;
         }
     }
+
 }

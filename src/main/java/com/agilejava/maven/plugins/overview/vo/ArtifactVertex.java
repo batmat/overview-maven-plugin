@@ -35,4 +35,7 @@ public class ArtifactVertex extends DirectedSparseVertex {
         this.distance = distance;
     }
 
+    public void alignDistance(int depth) {
+        if (distance > depth) distance = depth;
+    }
 }
