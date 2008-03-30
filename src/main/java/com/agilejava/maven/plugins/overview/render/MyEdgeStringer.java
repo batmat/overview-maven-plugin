@@ -8,7 +8,7 @@ public class MyEdgeStringer implements EdgeStringer {
     private String suppressedScopes;
 
     public MyEdgeStringer(String suppressedScopes) {
-        this.suppressedScopes = suppressedScopes;
+        this.suppressedScopes = suppressedScopes == null ? "" : suppressedScopes;
     }
 
     public String getLabel(ArchetypeEdge archetypeEdge) {
