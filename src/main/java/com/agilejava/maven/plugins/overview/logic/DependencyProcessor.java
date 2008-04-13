@@ -34,13 +34,13 @@ public class DependencyProcessor {
     /**
      * Constructor injecting required dependencies.
      *
-     * @param excludes List of excluded artifacts like: "artifact1,artifact2".
-     * @param dependencyTreeBuilder Maven toolbox.
-     * @param localRepository Maven toolbox.
-     * @param factory Maven toolbox.
+     * @param excludes               List of excluded artifacts like: "artifact1,artifact2".
+     * @param dependencyTreeBuilder  Maven toolbox.
+     * @param localRepository        Maven toolbox.
+     * @param factory                Maven toolbox.
      * @param artifactMetadataSource Maven toolbox.
-     * @param collector Maven toolbox.
-     * @param abstractMojo Maven toolbox.
+     * @param collector              Maven toolbox.
+     * @param abstractMojo           Maven toolbox.
      */
     public DependencyProcessor(
             String excludes,
@@ -73,22 +73,13 @@ public class DependencyProcessor {
     /**
      * Create dependency graph for project and sub-projects.
      *
-     * @param project         Main project.
      * @param reactorProjects Sub projects.
      * @return Graph representing dependency.
      */
-    public DirectedGraph createGraph(MavenProject project, List reactorProjects) {
+    public DirectedGraph createGraph(List reactorProjects) {
         DirectedGraph graph = new DirectedSparseGraph();
         Map<Artifact, ArtifactVertex> processed = new HashMap<Artifact, ArtifactVertex>();
 
-        // Single project processing, in case of aggregate projects graph is empty.
-/*
-        process(project,
-                graph,
-                processed
-        );
-
-*/
         // For pom project, process all modules.
         for (Object reactorProject : reactorProjects) {
             process((MavenProject) reactorProject,
@@ -109,7 +100,7 @@ public class DependencyProcessor {
 
     private void process(DependencyNode node, DirectedGraph graph, Map<Artifact, ArtifactVertex> processed) {
         DependencyExtractor extractor = DependencyExtractor.getInstance();
-        extractor.extractGraph(node, graph, processed);
+        extractor.extractGraph(node, graph, processed, this.abstractMojo.getLog());
     }
 
     private DependencyNode resolveProject(MavenProject project) {

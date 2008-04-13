@@ -6,6 +6,7 @@ import edu.uci.ics.jung.graph.DirectedGraph;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.shared.dependency.tree.DependencyNode;
 import org.apache.maven.shared.dependency.tree.traversal.DependencyNodeVisitor;
+import org.apache.maven.plugin.logging.Log;
 
 import java.util.Map;
 
@@ -35,17 +36,19 @@ public class DependencyExtractor {
         private int depth = 0;
         private DirectedGraph graph;
         private Map<Artifact, ArtifactVertex> artifactVertexMap;
+        private Log log;
 
         /**
          * Default constructor setting context for processing.
          *
          * @param graph             Graph to populate. In can be prepopulated already.
          * @param artifactVertexMap Cache of all nodes in <code>graph</code>.
-         *                          content managed by extractor.
+         * @param log               Maven logger.
          */
-        public ExtractorDNV(DirectedGraph graph, Map<Artifact, ArtifactVertex> artifactVertexMap) {
+        public ExtractorDNV(DirectedGraph graph, Map<Artifact, ArtifactVertex> artifactVertexMap, Log log) {
             this.graph = graph;
             this.artifactVertexMap = artifactVertexMap;
+            this.log = log;
         }
 
         /**
@@ -73,7 +76,8 @@ public class DependencyExtractor {
         public boolean visit(DependencyNode node) {
             Artifact artifact = node.getArtifact();
             ArtifactVertex vertex;
-            System.out.println(depth + ": " + artifact.getId());
+            boolean wasHereBefore = false;
+            if (log.isDebugEnabled()) log.debug(depth + ": " + artifact.getId());
             if (!artifactVertexMap.containsKey(artifact)) {
                 // vertex not yet in graph
                 vertex = new ArtifactVertex(artifact, depth);
@@ -83,6 +87,7 @@ public class DependencyExtractor {
                 // vertex already in graph align depth
                 vertex = artifactVertexMap.get(artifact);
                 vertex.alignDistance(depth);
+                wasHereBefore = true;
             }
             if (node.getParent() != null) {
                 // create edge connecting parent to visited node.
@@ -95,7 +100,7 @@ public class DependencyExtractor {
                 );
             }
             depth++; // increment depth
-            return true; // process child nodes
+            return !wasHereBefore; // process child nodes if hasn't been here before
         }
 
         /**
@@ -119,8 +124,9 @@ public class DependencyExtractor {
      * @param node              Node to start extracting from.
      * @param graph             Populate this graph with extracted dependencies.
      * @param artifactVertexMap Storage for (artifact, vertex) mapping.
+     * @param log               Maven logger.
      */
-    public void extractGraph(DependencyNode node, DirectedGraph graph, Map<Artifact, ArtifactVertex> artifactVertexMap) {
-        node.accept(new ExtractorDNV(graph, artifactVertexMap));
+    public void extractGraph(DependencyNode node, DirectedGraph graph, Map<Artifact, ArtifactVertex> artifactVertexMap, Log log) {
+        node.accept(new ExtractorDNV(graph, artifactVertexMap, log));
     }
 }

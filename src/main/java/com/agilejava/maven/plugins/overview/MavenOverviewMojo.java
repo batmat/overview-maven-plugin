@@ -7,7 +7,6 @@ import com.agilejava.maven.plugins.overview.render.MyVertexShapeFunction;
 import com.agilejava.maven.plugins.overview.render.MyVertexStringer;
 import edu.uci.ics.jung.graph.DirectedGraph;
 import edu.uci.ics.jung.visualization.*;
-import edu.uci.ics.jung.visualization.contrib.KKLayoutInt;
 import edu.uci.ics.jung.visualization.contrib.KKLayout;
 import org.apache.maven.artifact.factory.ArtifactFactory;
 import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
@@ -246,7 +245,7 @@ public class MavenOverviewMojo extends AbstractMavenReport {
                 this);
 
         getLog().debug("Generating graph");
-        DirectedGraph graph = dependencyProcessor.createGraph(getProject(), reactorProjects);
+        DirectedGraph graph = dependencyProcessor.createGraph(reactorProjects);
 
         getLog().debug("Rendering graph");
         Layout layout = new KKLayout(graph);
