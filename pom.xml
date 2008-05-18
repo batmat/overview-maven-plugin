@@ -91,6 +91,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
     <!-- Build Settings -->
     <build>
         <plugins>
@@ -124,6 +125,13 @@
                 <version>2.0.4</version>
             </plugin>
         </plugins>
+	<extensions>
+	    <extension>
+	      <groupId>org.jvnet.wagon-svn</groupId>
+	      <artifactId>wagon-svn</artifactId>
+	      <version>1.8</version>
+	    </extension>
+	</extensions>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -152,11 +160,26 @@
             </plugin>
         </plugins>
     </reporting>
+    <distributionManagement>
+	<site>
+	    <id>googlecode.svn.server</id>
+	    <url>svn:https://maven-overview-plugin.googlecode.com/svn/site</url>
+	</site>
+	<snapshotRepository>
+	    <id>googlecode.svn.server</id>
+	    <url>svn:https://maven-overview-plugin.googlecode.com/svn/snapshot-repository</url>
+	</snapshotRepository>
+	<repository>
+	    <id>googlecode.svn.server</id>
+	    <url>svn:https://maven-overview-plugin.googlecode.com/svn/release-repository</url>
+	</repository>
+    </distributionManagement>
 
     <!-- More Project Information -->
     <name>Maven Overview Plugin</name>
     <description>
-        A simple Maven plugin, creating a diagram of all dependencies. (The entire transitive closure.)
+        A Maven plugin, creating a diagram of all dependencies (The entire transitive closure).
+	Works also as report.
     </description>
     <url>http://code.google.com/p/maven-overview-plugin/</url>
     <licenses>
@@ -196,6 +219,26 @@
             <name>No Mailing List</name>
         </mailingList>
     </mailingLists>
+    <repositories>
+	<repository>
+	    <id>Maven Overview Plugin - Snapshot Repository</id>
+	    <url>http://maven-overview-plugin.googlecode.com/svn/snapshot-repository</url>
+	    <snapshots><enabled>true</enabled></snapshots>
+	    <releases><enabled>false</enabled></releases>
+	</repository>
+	<repository>
+	    <id>Maven Overview Plugin - Release Repository</id>
+	    <url>http://maven-overview-plugin.googlecode.com/svn/release-repository</url>
+	    <snapshots><enabled>false</enabled></snapshots>
+	    <releases><enabled>true</enabled></releases>
+	</repository>
+	<repository>
+	    <id>maven2-repository.dev.java.net</id>
+	    <name>Java.net Repository for Maven</name>
+	    <url>http://download.java.net/maven/2/</url>
+	    <layout>default</layout>
+	</repository>
+    </repositories>
     <profiles>
         <profile>
             <id>release-profile</id>
