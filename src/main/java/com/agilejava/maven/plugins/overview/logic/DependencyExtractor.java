@@ -3,6 +3,8 @@ package com.agilejava.maven.plugins.overview.logic;
 import com.agilejava.maven.plugins.overview.vo.ArtifactVertex;
 import com.agilejava.maven.plugins.overview.vo.DependencyEdge;
 import edu.uci.ics.jung.graph.DirectedGraph;
+import edu.uci.ics.jung.exceptions.ConstraintViolationException;
+import edu.uci.ics.jung.utils.PredicateUtils;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.shared.dependency.tree.DependencyNode;
 import org.apache.maven.shared.dependency.tree.traversal.DependencyNodeVisitor;
@@ -89,15 +91,30 @@ public class DependencyExtractor {
                 vertex.alignDistance(depth);
                 wasHereBefore = true;
             }
-            if (node.getParent() != null) {
+            final DependencyNode parentNode = node.getParent();
+            final DependencyEdge dependencyEdge;
+            if (parentNode != null && !wasHereBefore) {
                 // create edge connecting parent to visited node.
-                final Artifact parentArtifact = node.getParent().getArtifact();
-                graph.addEdge(
-                        new DependencyEdge(
-                                artifactVertexMap.get(parentArtifact),
-                                vertex,
-                                artifact.getScope())
-                );
+                final Artifact parentArtifact = parentNode.getArtifact();
+                dependencyEdge = new DependencyEdge(
+                        artifactVertexMap.get(parentArtifact),
+                        vertex,
+                        artifact.getScope());
+                try {
+                    graph.addEdge(dependencyEdge);
+                } catch (ConstraintViolationException e) {
+                    /**
+                     * (2) If the constraint is not simple (as in the example above; NotPredicate takes
+                     a Predicate as an argument), catch the ConstraintViolationException, call
+                     getViolatedConstraint() on it, and use PredicateUtils.evaluateNestedPredicates()
+                     on the constraint to find out the results of evaluating each constituent
+                     predicate.
+                     */
+                    Map result = PredicateUtils.evaluateNestedPredicates(e.getViolatedConstraint(), dependencyEdge);
+                    for (Object entry : result.entrySet()) {
+                        log.warn("Predicate Violation: key: " + ((Map.Entry) entry).getKey() + ", value: " + ((Map.Entry) entry).getValue());
+                    }
+                }
             }
             depth++; // increment depth
             return !wasHereBefore; // process child nodes if hasn't been here before

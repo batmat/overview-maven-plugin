@@ -11,6 +11,6 @@ Command Line Usage
   Once you have maven-overview-plugin in your local repository you can run it from command line like that:
 
 +---+
-mvn com.agilejava.maven.plugins:maven-overview-plugin:1.0-SNAPSHOT:overview
+mvn com.agilejava.maven.plugins:maven-overview-plugin:1.1-SNAPSHOT:overview
 +---+
 

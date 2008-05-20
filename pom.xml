@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="                 http://maven.apache.org/POM/4.0.0                 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -125,13 +126,13 @@
                 <version>2.0.4</version>
             </plugin>
         </plugins>
-	<extensions>
-	    <extension>
-	      <groupId>org.jvnet.wagon-svn</groupId>
-	      <artifactId>wagon-svn</artifactId>
-	      <version>1.8</version>
-	    </extension>
-	</extensions>
+        <extensions>
+            <extension>
+                <groupId>org.jvnet.wagon-svn</groupId>
+                <artifactId>wagon-svn</artifactId>
+                <version>1.8</version>
+            </extension>
+        </extensions>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -155,31 +156,44 @@
                 <configuration>
                     <width>900</width>
                     <height>900</height>
-                    <suppressedScopes />
+                    <suppressedScopes/>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-changelog-plugin</artifactId>
+                <reportSets>
+                    <reportSet>
+                        <id>dual-report</id>
+                        <reports>
+                            <report>changelog</report>
+                            <report>file-activity</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
             </plugin>
         </plugins>
     </reporting>
     <distributionManagement>
-	<site>
-	    <id>googlecode.svn.server</id>
-	    <url>svn:https://maven-overview-plugin.googlecode.com/svn/site</url>
-	</site>
-	<snapshotRepository>
-	    <id>googlecode.svn.server</id>
-	    <url>svn:https://maven-overview-plugin.googlecode.com/svn/snapshot-repository</url>
-	</snapshotRepository>
-	<repository>
-	    <id>googlecode.svn.server</id>
-	    <url>svn:https://maven-overview-plugin.googlecode.com/svn/release-repository</url>
-	</repository>
+        <site>
+            <id>googlecode.svn.server</id>
+            <url>svn:https://maven-overview-plugin.googlecode.com/svn/site</url>
+        </site>
+        <snapshotRepository>
+            <id>googlecode.svn.server</id>
+            <url>svn:https://maven-overview-plugin.googlecode.com/svn/snapshot-repository</url>
+        </snapshotRepository>
+        <repository>
+            <id>googlecode.svn.server</id>
+            <url>svn:https://maven-overview-plugin.googlecode.com/svn/release-repository</url>
+        </repository>
     </distributionManagement>
 
     <!-- More Project Information -->
     <name>Maven Overview Plugin</name>
     <description>
         A Maven plugin, creating a diagram of all dependencies (The entire transitive closure).
-	Works also as report.
+        Works also as report.
     </description>
     <url>http://code.google.com/p/maven-overview-plugin/</url>
     <licenses>
@@ -220,24 +234,32 @@
         </mailingList>
     </mailingLists>
     <repositories>
-	<repository>
-	    <id>Maven Overview Plugin - Snapshot Repository</id>
-	    <url>http://maven-overview-plugin.googlecode.com/svn/snapshot-repository</url>
-	    <snapshots><enabled>true</enabled></snapshots>
-	    <releases><enabled>false</enabled></releases>
-	</repository>
-	<repository>
-	    <id>Maven Overview Plugin - Release Repository</id>
-	    <url>http://maven-overview-plugin.googlecode.com/svn/release-repository</url>
-	    <snapshots><enabled>false</enabled></snapshots>
-	    <releases><enabled>true</enabled></releases>
-	</repository>
-	<repository>
-	    <id>maven2-repository.dev.java.net</id>
-	    <name>Java.net Repository for Maven</name>
-	    <url>http://download.java.net/maven/2/</url>
-	    <layout>default</layout>
-	</repository>
+        <repository>
+            <id>Maven Overview Plugin - Snapshot Repository</id>
+            <url>http://maven-overview-plugin.googlecode.com/svn/snapshot-repository</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>Maven Overview Plugin - Release Repository</id>
+            <url>http://maven-overview-plugin.googlecode.com/svn/release-repository</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>maven2-repository.dev.java.net</id>
+            <name>Java.net Repository for Maven</name>
+            <url>http://download.java.net/maven/2/</url>
+            <layout>default</layout>
+        </repository>
     </repositories>
     <profiles>
         <profile>
