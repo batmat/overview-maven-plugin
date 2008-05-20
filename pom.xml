@@ -223,10 +223,10 @@
     </issueManagement>
     <ciManagement />
     <scm>
-        <connection>http://maven-overview-plugin.googlecode.com/svn/trunk/</connection>
-        <developerConnection>https://maven-overview-plugin.googlecode.com/svn/trunk/</developerConnection>
+        <connection>scm:svn:http://maven-overview-plugin.googlecode.com/svn/trunk/</connection>
+        <developerConnection>scm:svn:https://maven-overview-plugin.googlecode.com/svn/trunk/</developerConnection>
         <tag>HEAD</tag>
-        <url>http://maven-overview-plugin.googlecode.com/svn/trunk/</url>
+        <url>scm:svn:http://maven-overview-plugin.googlecode.com/svn/trunk/</url>
     </scm>
     <mailingLists>
         <mailingList>
