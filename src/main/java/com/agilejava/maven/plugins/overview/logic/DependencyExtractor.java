@@ -38,7 +38,7 @@ public final class DependencyExtractor {
     /** Graph. */
     private DirectedGraph graph;
     /** Mapping of Artifacts to Vertexes. */
-    private Map < Artifact, ArtifactVertex > artifactVertexMap;
+    private Map<Artifact, ArtifactVertex> artifactVertexMap;
     /** Logger. */
     private Log log;
 
@@ -51,7 +51,7 @@ public final class DependencyExtractor {
      */
     public ExtractorDNV(
         final DirectedGraph directedGraph,
-        final Map < Artifact, ArtifactVertex > vertexMap,
+        final Map<Artifact, ArtifactVertex> vertexMap,
         final Log logger) {
       this.graph = directedGraph;
       this.artifactVertexMap = vertexMap;
@@ -103,7 +103,7 @@ public final class DependencyExtractor {
       }
       final DependencyNode parentNode = node.getParent();
       final DependencyEdge dependencyEdge;
-            if (parentNode != null && !wasHereBefore) {
+      if (parentNode != null) {
         // create edge connecting parent to visited node.
         final Artifact parentArtifact = parentNode.getArtifact();
         dependencyEdge = new DependencyEdge(
@@ -176,7 +176,7 @@ public final class DependencyExtractor {
    */
   public void extractGraph(
       final DependencyNode node, final DirectedGraph graph,
-      final Map < Artifact, ArtifactVertex > artifactVertexMap, final Log log) {
+      final Map<Artifact, ArtifactVertex> artifactVertexMap, final Log log) {
     node.accept(new ExtractorDNV(graph, artifactVertexMap, log));
   }
 }

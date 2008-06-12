@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugins</artifactId>
-        <version>10</version>
+        <version>11</version>
     </parent>
 
     <!-- The Basics -->
@@ -15,7 +15,7 @@
     <packaging>maven-plugin</packaging>
 
     <prerequisites>
-        <maven>2.0.4</maven>
+        <maven>2.0.6</maven>
     </prerequisites>
 
     <dependencies>
@@ -226,7 +226,7 @@
         <connection>scm:svn:http://maven-overview-plugin.googlecode.com/svn/trunk/</connection>
         <developerConnection>scm:svn:https://maven-overview-plugin.googlecode.com/svn/trunk/</developerConnection>
         <tag>HEAD</tag>
-        <url>scm:svn:http://maven-overview-plugin.googlecode.com/svn/trunk/</url>
+        <url>http://code.google.com/p/maven-overview-plugin/source/browse</url>
     </scm>
     <mailingLists>
         <mailingList>
