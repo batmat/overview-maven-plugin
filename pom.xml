@@ -95,7 +95,27 @@
 
     <!-- Build Settings -->
     <build>
+      <pluginManagement>
         <plugins>
+          <plugin>
+            <artifactId>maven-release-plugin</artifactId>
+            <configuration>
+              <tagBase>
+                scm:svn:http://maven-overview-plugin.googlecode.com/svn/tags
+              </tagBase>
+            </configuration>
+          </plugin>
+          <plugin>
+            <artifactId>maven-site-plugin</artifactId>
+            <configuration>
+              <stagingSiteURL>
+                svn:https://maven-overview-plugin.googlecode.com/svn/site-stage/${project.artifactId}-${project.version}
+              </stagingSiteURL>
+            </configuration>
+          </plugin>
+        </plugins>
+      </pluginManagement>
+      <plugins>
             <!-- Java 5 -->
             <plugin>
                 <inherited>true</inherited>
