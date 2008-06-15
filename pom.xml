@@ -1,357 +1,349 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-plugins</artifactId>
-        <version>11</version>
-    </parent>
+  <parent>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-plugins</artifactId>
+    <version>11</version>
+  </parent>
 
-    <!-- The Basics -->
-    <groupId>com.agilejava.maven.plugins</groupId>
-    <artifactId>maven-overview-plugin</artifactId>
-    <version>1.1-SNAPSHOT</version>
-    <packaging>maven-plugin</packaging>
+  <!-- The Basics -->
+  <groupId>com.agilejava.maven.plugins</groupId>
+  <artifactId>maven-overview-plugin</artifactId>
+  <version>1.1-SNAPSHOT</version>
+  <packaging>maven-plugin</packaging>
 
-    <prerequisites>
-        <maven>2.0.6</maven>
-    </prerequisites>
+  <prerequisites>
+    <maven>2.0.6</maven>
+  </prerequisites>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.maven.reporting</groupId>
+      <artifactId>maven-reporting-impl</artifactId>
+      <exclusions>
+        <exclusion> <!-- will use org.codehaus.plexus:plexus-utils -->
+          <groupId>plexus</groupId>
+          <artifactId>plexus-utils</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven.shared</groupId>
+      <artifactId>maven-dependency-tree</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>jung</groupId>
+      <artifactId>jung</artifactId>
+    </dependency>
+  </dependencies>
+  <dependencyManagement>
     <dependencies>
-        <dependency>
-            <groupId>org.apache.maven.reporting</groupId>
-            <artifactId>maven-reporting-impl</artifactId>
-            <exclusions>
-                <exclusion> <!-- will use org.codehaus.plexus:plexus-utils -->
-                    <groupId>plexus</groupId>
-                    <artifactId>plexus-utils</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.maven.shared</groupId>
-            <artifactId>maven-dependency-tree</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>jung</groupId>
-            <artifactId>jung</artifactId>
-        </dependency>
+      <dependency>
+        <groupId>org.apache.maven</groupId>
+        <artifactId>maven-artifact-manager</artifactId>
+        <version>2.0.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.maven</groupId>
+        <artifactId>maven-model</artifactId>
+        <version>2.0.4</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.maven</groupId>
+        <artifactId>maven-plugin-api</artifactId>
+        <version>2.0.4</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.maven</groupId>
+        <artifactId>maven-project</artifactId>
+        <version>2.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.maven.reporting</groupId>
+        <artifactId>maven-reporting-impl</artifactId>
+        <version>2.0.4</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.maven.doxia</groupId>
+        <artifactId>doxia-core</artifactId>
+        <version>1.0-alpha-7</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.maven.doxia</groupId>
+        <artifactId>doxia-site-renderer</artifactId>
+        <version>1.0-alpha-7</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.maven.shared</groupId>
+        <artifactId>maven-dependency-tree</artifactId>
+        <version>1.1</version>
+      </dependency>
+      <dependency>
+        <groupId>jung</groupId>
+        <artifactId>jung</artifactId>
+        <version>1.7.6</version>
+      </dependency>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.1</version>
+      </dependency>
     </dependencies>
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.apache.maven</groupId>
-                <artifactId>maven-artifact-manager</artifactId>
-                <version>2.0.1</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.maven</groupId>
-                <artifactId>maven-model</artifactId>
-                <version>2.0.4</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.maven</groupId>
-                <artifactId>maven-plugin-api</artifactId>
-                <version>2.0.4</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.maven</groupId>
-                <artifactId>maven-project</artifactId>
-                <version>2.0</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.maven.reporting</groupId>
-                <artifactId>maven-reporting-impl</artifactId>
-                <version>2.0.4</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.maven.doxia</groupId>
-                <artifactId>doxia-core</artifactId>
-                <version>1.0-alpha-7</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.maven.doxia</groupId>
-                <artifactId>doxia-site-renderer</artifactId>
-                <version>1.0-alpha-7</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.maven.shared</groupId>
-                <artifactId>maven-dependency-tree</artifactId>
-                <version>1.1</version>
-            </dependency>
-            <dependency>
-                <groupId>jung</groupId>
-                <artifactId>jung</artifactId>
-                <version>1.7.6</version>
-            </dependency>
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>4.1</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+  </dependencyManagement>
 
-    <!-- Build Settings -->
-    <build>
-      <pluginManagement>
-        <plugins>
-          <plugin>
-            <artifactId>maven-release-plugin</artifactId>
-            <configuration>
-              <tagBase>
-                http://maven-overview-plugin.googlecode.com/svn/tags
-              </tagBase>
-            </configuration>
-          </plugin>
-          <plugin>
-            <artifactId>maven-site-plugin</artifactId>
-            <configuration>
-              <stagingSiteURL>
-                svn:https://maven-overview-plugin.googlecode.com/svn/site-stage/${project.artifactId}-${project.version}
-              </stagingSiteURL>
-            </configuration>
-          </plugin>
-        </plugins>
-      </pluginManagement>
+  <!-- Build Settings -->
+  <build>
+    <!-- Change inherited settings. -->
+    <pluginManagement>
       <plugins>
-            <!-- Java 5 -->
-            <plugin>
-                <inherited>true</inherited>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-docck-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.3</version>
-            </plugin>
-            <plugin>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.0.4</version>
-            </plugin>
-        </plugins>
-        <extensions>
-            <extension>
-                <groupId>org.jvnet.wagon-svn</groupId>
-                <artifactId>wagon-svn</artifactId>
-                <version>1.8</version>
-            </extension>
-        </extensions>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-    </build>
-    <reporting>
+        <plugin>
+          <artifactId>maven-release-plugin</artifactId>
+          <configuration>
+            <tagBase>
+              svn:https://maven-overview-plugin.googlecode.com/svn/tags
+            </tagBase>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-site-plugin</artifactId>
+          <configuration>
+            <stagingSiteURL>
+              svn:https://maven-overview-plugin.googlecode.com/svn/site-stage/${project.artifactId}-${project.version}
+            </stagingSiteURL>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <!-- Java 5 -->
+      <plugin>
+        <inherited>true</inherited>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-docck-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.3</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.0.4</version>
+      </plugin>
+    </plugins>
+    <extensions>
+      <extension>
+        <groupId>org.jvnet.wagon-svn</groupId>
+        <artifactId>wagon-svn</artifactId>
+        <version>1.8</version>
+      </extension>
+    </extensions>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+  </build>
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jxr-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>com.agilejava.maven.plugins</groupId>
+        <artifactId>maven-overview-plugin</artifactId>
+        <configuration>
+          <width>900</width>
+          <height>900</height>
+          <suppressedScopes/>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-changelog-plugin</artifactId>
+        <reportSets>
+          <reportSet>
+            <id>dual-report</id>
+            <reports>
+              <report>changelog</report>
+              <report>file-activity</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+    </plugins>
+  </reporting>
+  <distributionManagement>
+    <site>
+      <id>googlecode.svn.server</id>
+      <url>svn:https://maven-overview-plugin.googlecode.com/svn/site</url>
+    </site>
+    <snapshotRepository>
+      <id>googlecode.svn.server</id>
+      <url>
+        svn:https://maven-overview-plugin.googlecode.com/svn/snapshot-repository
+      </url>
+    </snapshotRepository>
+    <repository>
+      <id>googlecode.svn.server</id>
+      <url>
+        svn:https://maven-overview-plugin.googlecode.com/svn/release-repository
+      </url>
+    </repository>
+  </distributionManagement>
+
+  <!-- More Project Information -->
+  <name>Maven Overview Plugin</name>
+  <description>
+    A Maven plugin, creating a diagram of all dependencies (The entire
+    transitive closure).
+    Works also as report.
+  </description>
+  <url>http://code.google.com/p/maven-overview-plugin/</url>
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>wilfredspringer</id>
+      <name>Wilfred Springer</name>
+    </developer>
+    <developer>
+      <id>hubert.iwaniuk</id>
+      <name>Hubert Iwaniuk</name>
+    </developer>
+  </developers>
+  <inceptionYear>2008</inceptionYear>
+  <organization>
+    <name>Agile Java</name>
+  </organization>
+
+  <!-- Environment Settings -->
+  <issueManagement>
+    <url>http://code.google.com/p/maven-overview-plugin/issues/list</url>
+  </issueManagement>
+  <ciManagement/>
+  <scm>
+    <connection>
+      scm:svn:http://maven-overview-plugin.googlecode.com/svn/trunk/
+    </connection>
+    <developerConnection>
+      scm:svn:https://maven-overview-plugin.googlecode.com/svn/trunk/
+    </developerConnection>
+    <tag>HEAD</tag>
+    <url>http://code.google.com/p/maven-overview-plugin/source/browse</url>
+  </scm>
+  <mailingLists>
+    <mailingList>
+      <name>No Mailing List</name>
+    </mailingList>
+  </mailingLists>
+  <repositories>
+    <!-- waron-svn id located here -->
+    <repository>
+      <id>maven2-repository.dev.java.net</id>
+      <name>Java.net Repository for Maven</name>
+      <url>http://download.java.net/maven/2/</url>
+      <layout>default</layout>
+    </repository>
+  </repositories>
+  <profiles>
+    <profile>
+      <id>release-profile</id>
+
+      <activation>
+        <property>
+          <name>performRelease</name>
+          <value>true</value>
+        </property>
+      </activation>
+
+      <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jxr-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>com.agilejava.maven.plugins</groupId>
-                <artifactId>maven-overview-plugin</artifactId>
-                <configuration>
-                    <width>900</width>
-                    <height>900</height>
-                    <suppressedScopes/>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-changelog-plugin</artifactId>
-                <reportSets>
-                    <reportSet>
-                        <id>dual-report</id>
-                        <reports>
-                            <report>changelog</report>
-                            <report>file-activity</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
+          <!-- Attach Sources -->
+          <plugin>
+            <inherited>true</inherited>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+          <!-- Attach JavaDoc -->
+          <plugin>
+            <inherited>true</inherited>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+          <!-- Update Release Info -->
+          <plugin>
+            <inherited>true</inherited>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-deploy-plugin</artifactId>
+            <configuration>
+              <updateReleaseInfo>true</updateReleaseInfo>
+            </configuration>
+          </plugin>
+
+          <!-- DOAP -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-doap-plugin</artifactId>
+            <configuration>
+              <category>dependency-visualization</category>
+              <language>Java</language>
+            </configuration>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>generate</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
         </plugins>
-    </reporting>
-    <distributionManagement>
-        <site>
-            <id>googlecode.svn.server</id>
-            <url>svn:https://maven-overview-plugin.googlecode.com/svn/site</url>
-        </site>
-        <snapshotRepository>
-            <id>googlecode.svn.server</id>
-            <url>svn:https://maven-overview-plugin.googlecode.com/svn/snapshot-repository</url>
-        </snapshotRepository>
-        <repository>
-            <id>googlecode.svn.server</id>
-            <url>svn:https://maven-overview-plugin.googlecode.com/svn/release-repository</url>
-        </repository>
-    </distributionManagement>
-
-    <!-- More Project Information -->
-    <name>Maven Overview Plugin</name>
-    <description>
-        A Maven plugin, creating a diagram of all dependencies (The entire transitive closure).
-        Works also as report.
-    </description>
-    <url>http://code.google.com/p/maven-overview-plugin/</url>
-    <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-        </license>
-    </licenses>
-    <developers>
-        <developer>
-            <id>wilfredspringer</id>
-            <name>Wilfred Springer</name>
-        </developer>
-        <developer>
-            <id>hubert.iwaniuk</id>
-            <name>Hubert Iwaniuk</name>
-        </developer>
-    </developers>
-    <inceptionYear>2008</inceptionYear>
-    <organization>
-        <name>Agile Java</name>
-    </organization>
-
-    <!-- Environment Settings -->
-    <issueManagement>
-        <url>http://code.google.com/p/maven-overview-plugin/issues/list</url>
-    </issueManagement>
-    <ciManagement />
-    <scm>
-        <connection>scm:svn:http://maven-overview-plugin.googlecode.com/svn/trunk/</connection>
-        <developerConnection>scm:svn:https://maven-overview-plugin.googlecode.com/svn/trunk/</developerConnection>
-        <tag>HEAD</tag>
-        <url>http://code.google.com/p/maven-overview-plugin/source/browse</url>
-    </scm>
-    <mailingLists>
-        <mailingList>
-            <name>No Mailing List</name>
-        </mailingList>
-    </mailingLists>
-    <repositories>
-        <repository>
-            <id>Maven Overview Plugin - Snapshot Repository</id>
-            <url>http://maven-overview-plugin.googlecode.com/svn/snapshot-repository</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </repository>
-        <repository>
-            <id>Maven Overview Plugin - Release Repository</id>
-            <url>http://maven-overview-plugin.googlecode.com/svn/release-repository</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-        <repository>
-            <id>maven2-repository.dev.java.net</id>
-            <name>Java.net Repository for Maven</name>
-            <url>http://download.java.net/maven/2/</url>
-            <layout>default</layout>
-        </repository>
-    </repositories>
-    <profiles>
-        <profile>
-            <id>release-profile</id>
-
-            <activation>
-                <property>
-                    <name>performRelease</name>
-                    <value>true</value>
-                </property>
-            </activation>
-
-            <build>
-                <plugins>
-                    <!-- Attach Sources -->
-                    <plugin>
-                        <inherited>true</inherited>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>attach-sources</id>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                    <!-- Attach JavaDoc -->
-                    <plugin>
-                        <inherited>true</inherited>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>attach-javadocs</id>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                    <!-- Update Release Info -->
-                    <plugin>
-                        <inherited>true</inherited>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-deploy-plugin</artifactId>
-                        <configuration>
-                            <updateReleaseInfo>true</updateReleaseInfo>
-                        </configuration>
-                    </plugin>
-
-                    <!-- DOAP -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-doap-plugin</artifactId>
-                        <configuration>
-                            <category>dependency-visualization</category>
-                            <language>Java</language>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>generate</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
+      </build>
+    </profile>
+  </profiles>
 </project>

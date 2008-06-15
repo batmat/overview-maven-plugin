@@ -3,32 +3,73 @@
 		---
 		Hubert Iwaniuk
 		---
-		02 Feb 2008
+		15 Jun 2008
 		---
 
 Installing
 
+  Add following to your pom.xml
+
 +---+
-mvn install
+  <pluginRepositories>
+    <pluginRepository>
+      <id>Maven Overview Plugin - Snapshot Repository</id>
+      <url>
+        http://maven-overview-plugin.googlecode.com/svn/snapshot-repository
+      </url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+    </pluginRepository>
+    <pluginRepository>
+      <id>Maven Overview Plugin - Release Repository</id>
+      <url>
+        http://maven-overview-plugin.googlecode.com/svn/release-repository
+      </url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+    </pluginRepository>
+  </pluginRepositories>
 +---+
 
 Usage
 
+* As report
+
   Add following to you pom.xml
 
 +---+
-    <reporting>
-        <plugins>
-            ...
-            <plugin>
-                <groupId>com.agilejava.maven.plugins</groupId>
-                <artifactId>maven-overview-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </reporting>
+  <reporting>
+    <plugins>
+      ...
+      <plugin>
+        <groupId>com.agilejava.maven.plugins</groupId>
+        <artifactId>maven-overview-plugin</artifactId>
+        <version>1.1-SNAPSHOT</version>
+      </plugin>
+    </plugins>
+  </reporting>
 +---+
 
-  The color indicates if the dependency distance.
+* Standalone
+
+  Execute following
+
++---+
+mvn com.agilejava.maven.plugins:maven-overview-plugin:1.1-SNAPSHOT:overview
++---+
+  Overview graph shoud be generated in target/site/images/overview.png
+
+* Legend
+
+  The color indicates the dependency distance.
   The artifact for which the diagram is created is rendered as a red dot.
   Direct dependencies are rendered orange.
   Brightness will increase if you start moving to the edges of the dependency graph.
