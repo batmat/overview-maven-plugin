@@ -103,7 +103,7 @@
           <artifactId>maven-release-plugin</artifactId>
           <configuration>
             <tagBase>
-              svn:https://maven-overview-plugin.googlecode.com/svn/tags
+              https://maven-overview-plugin.googlecode.com/svn/tags
             </tagBase>
           </configuration>
         </plugin>
@@ -111,7 +111,7 @@
           <artifactId>maven-site-plugin</artifactId>
           <configuration>
             <stagingSiteURL>
-              svn:https://maven-overview-plugin.googlecode.com/svn/site-stage/${project.artifactId}-${project.version}
+              svn:https://maven-overview-plugin.googlecode.com/svn/site/staging/${project.artifactId}-${project.version}
             </stagingSiteURL>
           </configuration>
         </plugin>
