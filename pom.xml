@@ -1,12 +1,10 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <!-- The Basics -->
   <groupId>com.agilejava.maven.plugins</groupId>
   <artifactId>maven-overview-plugin</artifactId>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.1</version>
   <packaging>maven-plugin</packaging>
 
   <prerequisites>
@@ -389,10 +387,10 @@
   </issueManagement>
   <ciManagement />
   <scm>
-    <connection>scm:svn:http://maven-overview-plugin.googlecode.com/svn/trunk</connection>
-    <developerConnection>scm:svn:https://maven-overview-plugin.googlecode.com/svn/trunk</developerConnection>
+    <connection>scm:svn:http://maven-overview-plugin.googlecode.com/svn/tags/maven-overview-plugin-1.1</connection>
+    <developerConnection>scm:svn:https://maven-overview-plugin.googlecode.com/svn/tags/maven-overview-plugin-1.1</developerConnection>
     <tag>HEAD</tag>
-    <url>http://code.google.com/p/maven-overview-plugin/source/browse</url>
+    <url>http://code.google.com/p/maven-overview-plugin/source/browse/tags/maven-overview-plugin-1.1</url>
   </scm>
   <mailingLists>
     <mailingList>
