@@ -4,7 +4,7 @@
   <!-- The Basics -->
   <groupId>com.agilejava.maven.plugins</groupId>
   <artifactId>maven-overview-plugin</artifactId>
-  <version>1.1</version>
+  <version>1.2-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
 
   <prerequisites>
@@ -387,10 +387,9 @@
   </issueManagement>
   <ciManagement />
   <scm>
-    <connection>scm:svn:http://maven-overview-plugin.googlecode.com/svn/tags/maven-overview-plugin-1.1</connection>
-    <developerConnection>scm:svn:https://maven-overview-plugin.googlecode.com/svn/tags/maven-overview-plugin-1.1</developerConnection>
-    <tag>HEAD</tag>
-    <url>http://code.google.com/p/maven-overview-plugin/source/browse/tags/maven-overview-plugin-1.1</url>
+    <connection>scm:svn:http://maven-overview-plugin.googlecode.com/svn/trunk</connection>
+    <developerConnection>scm:svn:https://maven-overview-plugin.googlecode.com/svn/trunk</developerConnection>
+    <url>http://code.google.com/p/maven-overview-plugin/source/browse</url>
   </scm>
   <mailingLists>
     <mailingList>
