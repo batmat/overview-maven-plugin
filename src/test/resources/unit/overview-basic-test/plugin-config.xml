@@ -1,0 +1,17 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-overview-plugin</artifactId>
+        <groupId>com.agilejava.maven.plugins</groupId>
+        <configuration>
+          <width>900</width>
+          <height>900</height>
+          <vertexFullLabel>true</vertexFullLabel>
+          <suppressedScopes>provided, test</suppressedScopes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+

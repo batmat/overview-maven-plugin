@@ -53,21 +53,21 @@ public class MavenOverviewMojo extends AbstractMavenReport {
    *
    * @parameter expression="${width}" default-value="1200"
    */
-  private int width = 1200;
+  int width = 1200;
 
   /**
    * Rendered graph height in pixels.
    *
    * @parameter expression="${height}" default-value="1200"
    */
-  private int height = 1200;
+  int height = 1200;
 
   /**
    * Should vertex name be full artifact ID.
    *
    * @parameter expression="${vertexFullLabel}" default-value="false"
    */
-  private boolean vertexFullLabel = false;
+  boolean vertexFullLabel = false;
 
   /**
    * Suppressed scopes.
@@ -77,7 +77,7 @@ public class MavenOverviewMojo extends AbstractMavenReport {
    *
    * @parameter expression="${suppressedScopes}"
    */
-  private String suppressedScopes;
+  String suppressedScopes;
 
   /**
    * Directory where reports will go.
