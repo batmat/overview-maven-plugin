@@ -9,18 +9,26 @@ import org.apache.maven.artifact.Artifact;
  * Vertex string value provider.
  */
 public class MyVertexStringer implements VertexStringer {
-    private boolean fullLabel;
+  private boolean fullLabel;
 
-    public MyVertexStringer(boolean fullLabel) {
-        this.fullLabel = fullLabel;
-    }
+  /**
+   * Ctor for vertex stringer.
+   *
+   * @param fullLabel if <code>true</code> labels are going to be full
+   *                  <em>ID</em>s, if <code>false</code> labels are going to be
+   *                  <em>artifactID</em>s.
+   */
+  public MyVertexStringer(boolean fullLabel) {
+    this.fullLabel = fullLabel;
+  }
 
-    public String getLabel(ArchetypeVertex vertex) {
-        if (vertex instanceof ArtifactVertex) {
-            Artifact artifact = ((ArtifactVertex) vertex).getArtifact();
-            return fullLabel ? artifact.getId() : artifact.getArtifactId();
-        } else {
-            return null;
-        }
+  /** {@inheritDoc} */
+  public String getLabel(ArchetypeVertex vertex) {
+    if (vertex instanceof ArtifactVertex) {
+      Artifact artifact = ((ArtifactVertex) vertex).getArtifact();
+      return fullLabel ? artifact.getId() : artifact.getArtifactId();
+    } else {
+      return null;
     }
+  }
 }

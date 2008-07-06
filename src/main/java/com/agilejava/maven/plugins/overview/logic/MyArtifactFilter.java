@@ -7,17 +7,61 @@ import java.util.List;
 
 /**
  * Artifact filtering.
+ * <p/>
+ * Configured by two lists:
+ * <dl>
+ * <dt>includes</dt><dd>List of included <em>groupID</em>s.</dd>
+ * <dt>excludes</dt><dd>List of excluded <em>ID</em>s of artifacts.</dd>
+ * </dl>
+ * <p/>
+ * Behavior (<code color="green">true</code> artifact included,
+ * <code color="red">false</code> artifact filtered out):<br/>
+ * if <code>includes</code> present:
+ * <dl>
+ * <dt>true</dt><dd>if artifacts groupID is found in <code>includes</code> then
+ * <code color="green">true</code>, else <code color="red">false</code>.</dd>
+ * <dt>false</dt>
+ * <dd>if <code>excludes</code> present:
+ * <dl>
+ * <dt>true</dt><dd>if artifacts ID found in <code>excludes</code> than
+ * <code color="red">false</code>, else <code color="green">true</code>.</dd>
+ * <dt>false</dt><dd><code color="green">true</code>.</dd>
+ * </dl>
+ * </dd>
+ * </dl>
  *
  * @author <a href="mailto:Hubert.Iwaniuk@gmail.com">Hubert Iwaniuk</a>
  */
 class MyArtifactFilter implements ArtifactFilter {
-    private List<String> excludes;
 
-    public MyArtifactFilter(List<String> excludes) {
-        this.excludes = excludes;
-    }
+  /**
+   * List of excluded artifactIDs.
+   */
+  private List<String> excludes;
+  /**
+   * List of included groupIDs.
+   */
+  private List<String> includes;
 
-    public boolean include(Artifact artifact) {
-        return excludes == null || excludes.isEmpty() || !excludes.contains(artifact.getId());
-    }
+  /**
+   * Ctor setting finltering parameters.
+   *
+   * @param excludes List of excluded artifactIDs.
+   * @param includes List of included groupIDs.
+   */
+  public MyArtifactFilter(List<String> excludes, final List<String> includes) {
+    this.excludes = excludes;
+    this.includes = includes;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public boolean include(Artifact artifact) {
+    if (includes != null && !includes.isEmpty()) {
+      return includes.contains(artifact.getGroupId());
+    } else
+      return excludes == null || excludes.isEmpty() || !excludes.contains(
+          artifact.getId());
+  }
 }

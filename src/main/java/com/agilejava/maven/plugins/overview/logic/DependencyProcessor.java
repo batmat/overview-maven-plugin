@@ -19,9 +19,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/** Logic of dependency processing. */
+/**
+ * Logic of dependency processing.
+ */
 public class DependencyProcessor {
   private List<String> excludes;
+  private List<String> includes;
   private DependencyTreeBuilder dependencyTreeBuilder;
   private ArtifactRepository localRepository;
   private ArtifactFactory factory;
@@ -32,8 +35,10 @@ public class DependencyProcessor {
   /**
    * Constructor injecting required dependencies.
    *
-   * @param excludes               List of excluded artifacts like:
-   *                               "artifact1,artifact2".
+   * @param includes               String with coma separated includes groupsIds
+   *                               like: "com.gr1, com.gr2"
+   * @param excludes               String with coma separated excluded artifacts
+   *                               like: "artifact1,artifact2".
    * @param dependencyTreeBuilder  Maven toolbox.
    * @param localRepository        Maven toolbox.
    * @param factory                Maven toolbox.
@@ -42,6 +47,7 @@ public class DependencyProcessor {
    * @param abstractMojo           Maven toolbox.
    */
   public DependencyProcessor(
+      String includes,
       String excludes,
       DependencyTreeBuilder dependencyTreeBuilder,
       ArtifactRepository localRepository,
@@ -58,16 +64,39 @@ public class DependencyProcessor {
     if (this.abstractMojo.getLog().isDebugEnabled())
       this.abstractMojo.getLog()
           .debug("DependencyProcessor: excludes: " + excludes);
-    String[] strings = excludes.split(",");
-    this.excludes = new ArrayList<String>(strings.length);
-    for (String string : strings) {
+    final String[] exclSplited = excludes.split(",");
+    processSplitedFilter(
+        this.excludes = new ArrayList<String>(exclSplited.length), exclSplited,
+        "excludes");
+    final String[] inclSplited = includes.split(",");
+    processSplitedFilter(
+        this.includes = new ArrayList<String>(inclSplited.length), inclSplited,
+        "includes");
+  }
+
+  /**
+   * Processes exclusion list.
+   *
+   * @param saveTo      Save splitetd exclusions.
+   * @param splitedData Splited exclusions.
+   * @param desc        description
+   */
+  private void processSplitedFilter(
+      final List<String> saveTo, final String[] splitedData,
+      final String desc) {
+    for (String string : splitedData) {
       String trimmed = string.trim();
       if (trimmed.length() > 0) {
-        this.excludes.add(trimmed);
-        if (this.abstractMojo.getLog().isDebugEnabled())
-          this.abstractMojo.getLog()
-              .debug("DependencyProcessor: excluding: " + trimmed);
+        saveTo.add(trimmed);
+        logExclusion(trimmed, desc);
       }
+    }
+  }
+
+  private void logExclusion(final String trimmed, final String desc) {
+    if (this.abstractMojo.getLog().isDebugEnabled()) {
+      this.abstractMojo.getLog()
+          .debug("DependencyProcessor: " + desc + ": " + trimmed);
     }
   }
 
@@ -75,7 +104,6 @@ public class DependencyProcessor {
    * Create dependency graph for project and sub-projects.
    *
    * @param reactorProjects Sub projects.
-   *
    * @return Graph representing dependency.
    */
   public DirectedGraph createGraph(List reactorProjects) {
@@ -120,7 +148,7 @@ public class DependencyProcessor {
           localRepository,
           factory,
           artifactMetadataSource,
-          new MyArtifactFilter(excludes),
+          new MyArtifactFilter(includes, excludes),
           collector);
     } catch (DependencyTreeBuilderException e) {
       abstractMojo.getLog()

@@ -41,12 +41,22 @@ import java.util.ResourceBundle;
 public class MavenOverviewMojo extends AbstractMavenReport {
 
   /**
-   * Artifacts to be excluded. Regular expressions matching the full artifact
-   * designation.
+   * IDs of artifact to be excluded.
+   * <p/>
+   * Coma separated list of excluded artifacts IDs.
    *
    * @parameter expression="${excludes}"
    */
-  private String excludes = "";
+  String excludes = "";
+
+  /**
+   * GroupIDs of artifacts to be included.
+   * <p/>
+   * Coma separated list of included artifacts GroupIDs.
+   *
+   * @parameter expression="${includes}" default-value="${project.groupId}"
+   */
+  String includes = "";
 
   /**
    * Rendered graph width in pixels.
@@ -75,7 +85,7 @@ public class MavenOverviewMojo extends AbstractMavenReport {
    * Scopes that are not supposed to be shown on graph as edge labels.
    * <p/>
    *
-   * @parameter expression="${suppressedScopes}"
+   * @parameter expression="${suppressedScopes}" default-value="compile"
    */
   String suppressedScopes;
 
@@ -126,10 +136,14 @@ public class MavenOverviewMojo extends AbstractMavenReport {
    */
   protected ArtifactMetadataSource artifactMetadataSource;
 
-  /** @component */
+  /**
+   * @component
+   */
   protected ArtifactFactory artifactFactory;
 
-  /** @component */
+  /**
+   * @component
+   */
   private DependencyTreeBuilder dependencyTreeBuilder;
 
   /**
@@ -144,7 +158,9 @@ public class MavenOverviewMojo extends AbstractMavenReport {
   private static final String NAME = "report.overview.name";
   private static ResourceBundle info = ResourceBundle
       .getBundle(BUNDLE_NAME, Locale.getDefault());
-  /** Plugin Information */
+  /**
+   * Plugin Information
+   */
   private String pluginName = info.getString("plugin.name");
   private String pluginVersion = info.getString("plugin.version");
   private String pluginBuilder = info.getString("plugin.buildBy");
@@ -187,7 +203,6 @@ public class MavenOverviewMojo extends AbstractMavenReport {
    * Here goes execution of report.
    *
    * @param locale Current locale.
-   *
    * @throws MavenReportException Say no more.
    */
   protected void executeReport(Locale locale) throws MavenReportException {
@@ -223,7 +238,7 @@ public class MavenOverviewMojo extends AbstractMavenReport {
   private void generateOverview() {
     getLog().debug(
         "MavenOverviewMojo: " + pluginName + " v" + pluginVersion + " build by "
-            + pluginBuilder);
+        + pluginBuilder);
     File outputFile = new File(getGraphLocation());
     if (!outputFile.exists()) {
       getLog().debug(
@@ -233,8 +248,18 @@ public class MavenOverviewMojo extends AbstractMavenReport {
       getLog().info("MavenOverviewMojo: Created outputFile: " + outputFile);
     }
 
+    // assure that projects groupId is included.
+    if (includes != null
+        && !"".equals(includes.trim()) // don't add if no includes defined.
+        && !includes.contains(project.getGroupId())) {
+      getLog().debug(
+          "MavenOverviewPlugin: addind projects groupId ("
+          + project.getGroupId() + ") to includes (" + includes + ").");
+      includes += ", " + project.getGroupId();
+    }
     getLog().debug("MavenOverviewMojo: Collecting data");
     DependencyProcessor dependencyProcessor = new DependencyProcessor(
+        includes,
         excludes,
         dependencyTreeBuilder,
         localRepository,

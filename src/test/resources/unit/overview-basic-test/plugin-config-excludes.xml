@@ -8,8 +8,10 @@
           <width>900</width>
           <height>900</height>
           <vertexFullLabel>true</vertexFullLabel>
-          <!-- Default is 'compile'. -->
-          <suppressedScopes>provided, test</suppressedScopes>
+          <!-- default
+          <suppressedScopes>compile</suppressedScopes>
+          -->
+          <excludes>g:a1:jar:1.0, g:a2:jar:1.0</excludes>
         </configuration>
       </plugin>
     </plugins>
