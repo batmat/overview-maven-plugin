@@ -3,10 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>test</groupId>
-  <artifactId>test</artifactId>
+  <artifactId>test-single-overview</artifactId>
   <packaging>jar</packaging>
   <version>testing</version>
   <name>test</name>
+  <description>Single project, direct goal execution.</description>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -15,7 +16,7 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  <reporting>
+  <build>
     <plugins>
       <plugin>
         <groupId>com.agilejava.maven.plugins</groupId>
@@ -27,5 +28,5 @@
         </configuration>
       </plugin>
     </plugins>
-  </reporting>
+  </build>
 </project>

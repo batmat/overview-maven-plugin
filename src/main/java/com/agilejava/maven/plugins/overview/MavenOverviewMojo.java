@@ -206,6 +206,7 @@ public class MavenOverviewMojo extends AbstractMavenReport {
    * @throws MavenReportException Say no more.
    */
   protected void executeReport(Locale locale) throws MavenReportException {
+    debugState();
     Sink sink = getSink();
     sink.head();
     sink.title();
@@ -233,6 +234,16 @@ public class MavenOverviewMojo extends AbstractMavenReport {
     sink.body_();
     sink.flush();
     sink.close();
+  }
+
+  /**
+   * Debug Mojo state.
+   */
+  private void debugState() {
+    getLog().debug("MavenOverviewMojo: outputDirectory: " + outputDirectory);
+    getLog().debug(
+        "MavenOverviewMojo: getReportOutputDirectory(): "
+        + getReportOutputDirectory());
   }
 
   private void generateOverview() {
@@ -322,7 +333,11 @@ public class MavenOverviewMojo extends AbstractMavenReport {
   }
 
   private String getGraphLocation() {
-    return getOutputDirectory() + File.separator + getGraphLocationInSite();
+    getLog().debug(
+        "MavenOverviewMojo: getReportOutputDirectory(): "
+        + getReportOutputDirectory().getAbsolutePath());
+    return getReportOutputDirectory().getAbsolutePath() + File.separator
+           + getGraphLocationInSite();
   }
 
   public String getGraphLocationInSite() {
