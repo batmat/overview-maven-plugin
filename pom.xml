@@ -205,6 +205,7 @@
           <width>900</width>
           <height>900</height>
           <suppressedScopes />
+          <includes>com.agilejava.maven.plugins, org.apache.maven.reporting, org.apache.maven.shared, jung, org.apache.maven.doxia, commons-collections, colt, concurrent</includes>
         </configuration>
       </plugin>
       <plugin>

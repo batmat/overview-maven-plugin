@@ -54,7 +54,7 @@ public class MavenOverviewMojo extends AbstractMavenReport {
    * <p/>
    * Coma separated list of included artifacts GroupIDs.
    *
-   * @parameter expression="${includes}" default-value="${project.groupId}"
+   * @parameter expression="${includes}"
    */
   String includes = "";
 
@@ -222,6 +222,7 @@ public class MavenOverviewMojo extends AbstractMavenReport {
     sink.sectionTitle1_();
     sink.lineBreak();
     sink.lineBreak();
+    // graph generation
     generateOverview();
     sink.figure();
     sink.figureGraphics(getGraphLocationInSite());
@@ -264,7 +265,7 @@ public class MavenOverviewMojo extends AbstractMavenReport {
         && !"".equals(includes.trim()) // don't add if no includes defined.
         && !includes.contains(project.getGroupId())) {
       getLog().debug(
-          "MavenOverviewPlugin: addind projects groupId ("
+          "MavenOverviewMojo: addind projects groupId ("
           + project.getGroupId() + ") to includes (" + includes + ").");
       includes += ", " + project.getGroupId();
     }
@@ -311,6 +312,10 @@ public class MavenOverviewMojo extends AbstractMavenReport {
 
     container.paintComponents(graphics);
 
+    writeOut(outputFile, image);
+  }
+
+  private void writeOut(final File outputFile, final BufferedImage image) {
     getLog().debug(
         "MavenOverviewMojo: Writing image to " + outputFile.getAbsolutePath());
     try {

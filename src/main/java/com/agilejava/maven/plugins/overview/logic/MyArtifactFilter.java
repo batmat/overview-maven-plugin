@@ -1,8 +1,10 @@
 package com.agilejava.maven.plugins.overview.logic;
 
-import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
 import org.apache.maven.artifact.Artifact;
+import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
+import org.apache.maven.plugin.logging.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,6 +31,8 @@ import java.util.List;
  * </dl>
  * </dd>
  * </dl>
+ * <p/>
+ * TODO: due to https://jira.codehaus.org/browse/MSHARED-4 filtering broken.
  *
  * @author <a href="mailto:Hubert.Iwaniuk@gmail.com">Hubert Iwaniuk</a>
  */
@@ -46,12 +50,18 @@ class MyArtifactFilter implements ArtifactFilter {
   /**
    * Ctor setting finltering parameters.
    *
-   * @param excludes List of excluded artifactIDs.
    * @param includes List of included groupIDs.
+   * @param excludes List of excluded artifactIDs.
+   * @param log      logger.
    */
-  public MyArtifactFilter(List<String> excludes, final List<String> includes) {
-    this.excludes = excludes;
-    this.includes = includes;
+  public MyArtifactFilter(
+      final List < String > includes, List < String > excludes, final Log log) {
+    this.excludes = excludes != null ? new ArrayList < String > (excludes) : null;
+    this.includes = includes != null ? new ArrayList <String> (includes) : null;
+    log.debug(
+        "MyArtifactFilter: includes: \'" + includes + "\'.");
+    log.debug(
+        "MyArtifactFilter: excludes: \'" + excludes + "\'.");
   }
 
   /**
@@ -59,7 +69,14 @@ class MyArtifactFilter implements ArtifactFilter {
    */
   public boolean include(Artifact artifact) {
     if (includes != null && !includes.isEmpty()) {
-      return includes.contains(artifact.getGroupId());
+      boolean incl = false;
+      for (String include : includes) {
+        if (artifact.getGroupId().startsWith(include)) {
+          incl = true;
+          break;
+        }
+      }
+      return incl;
     } else
       return excludes == null || excludes.isEmpty() || !excludes.contains(
           artifact.getId());

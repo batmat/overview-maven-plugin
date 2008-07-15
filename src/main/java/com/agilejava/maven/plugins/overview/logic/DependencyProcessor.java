@@ -19,9 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Logic of dependency processing.
- */
+/** Logic of dependency processing. */
 public class DependencyProcessor {
   private List<String> excludes;
   private List<String> includes;
@@ -61,9 +59,6 @@ public class DependencyProcessor {
     this.artifactMetadataSource = artifactMetadataSource;
     this.collector = collector;
     this.abstractMojo = abstractMojo;
-    if (this.abstractMojo.getLog().isDebugEnabled())
-      this.abstractMojo.getLog()
-          .debug("DependencyProcessor: excludes: " + excludes);
     final String[] exclSplited = excludes.split(",");
     processSplitedFilter(
         this.excludes = new ArrayList<String>(exclSplited.length), exclSplited,
@@ -72,6 +67,12 @@ public class DependencyProcessor {
     processSplitedFilter(
         this.includes = new ArrayList<String>(inclSplited.length), inclSplited,
         "includes");
+    if (this.abstractMojo.getLog().isDebugEnabled()) {
+      this.abstractMojo.getLog()
+          .debug("DependencyProcessor: includes: " + this.includes);
+      this.abstractMojo.getLog()
+          .debug("DependencyProcessor: excludes: " + this.excludes);
+    }
   }
 
   /**
@@ -111,12 +112,14 @@ public class DependencyProcessor {
     Map<Artifact, ArtifactVertex> processed
         = new HashMap<Artifact, ArtifactVertex>();
 
+    final MyArtifactFilter myArtifactFilter = new MyArtifactFilter(
+        includes, excludes, abstractMojo.getLog());
     // For pom project, process all modules.
     for (Object reactorProject : reactorProjects) {
       process(
           (MavenProject) reactorProject,
           graph,
-          processed
+          processed, myArtifactFilter
       );
     }
     return graph;
@@ -125,21 +128,27 @@ public class DependencyProcessor {
   private void process(
       MavenProject node,
       DirectedGraph graph,
-      Map<Artifact, ArtifactVertex> processed
+      Map<Artifact, ArtifactVertex> processed,
+      final MyArtifactFilter artifactFilter
   ) {
     abstractMojo.getLog()
         .debug("DependencyProcessor: Processing: " + node.getId());
-    process(resolveProject(node), graph, processed);
+    process(
+        resolveProject(node, artifactFilter), graph, processed, artifactFilter);
   }
 
   private void process(
       DependencyNode node, DirectedGraph graph,
-      Map<Artifact, ArtifactVertex> processed) {
+      Map<Artifact, ArtifactVertex> processed,
+      final MyArtifactFilter artifactFilter) {
     DependencyExtractor extractor = DependencyExtractor.getInstance();
-    extractor.extractGraph(node, graph, processed, this.abstractMojo.getLog());
+    extractor.extractGraph(
+        node, graph, processed, this.abstractMojo.getLog(),
+        artifactFilter);
   }
 
-  private DependencyNode resolveProject(MavenProject project) {
+  private DependencyNode resolveProject(
+      MavenProject project, final MyArtifactFilter filter) {
     try {
       abstractMojo.getLog()
           .debug("DependencyProcessor: Resolving project: " + project.getId());
@@ -148,7 +157,7 @@ public class DependencyProcessor {
           localRepository,
           factory,
           artifactMetadataSource,
-          new MyArtifactFilter(includes, excludes),
+          filter,
           collector);
     } catch (DependencyTreeBuilderException e) {
       abstractMojo.getLog()
