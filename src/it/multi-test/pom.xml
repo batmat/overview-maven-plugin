@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>test</groupId>
+  <artifactId>multi-test</artifactId>
+  <packaging>pom</packaging>
+  <version>testing</version>
+  <name>multi-test</name>
+  <description>Multiproject test.</description>
+
+  <modules>
+    <module>a</module>
+    <module>b</module>
+    <module>c</module>
+  </modules>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>com.agilejava.maven.plugins</groupId>
+        <artifactId>maven-overview-plugin</artifactId>
+        <configuration>
+          <width>900</width>
+          <height>900</height>
+          <suppressedScopes/>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+</project>
+

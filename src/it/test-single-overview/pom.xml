@@ -24,7 +24,7 @@
         <version>testing</version>
         <configuration>
           <width>200</width>
-          <height>200</height>
+		  <height>200</height>
         </configuration>
       </plugin>
     </plugins>
