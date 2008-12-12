@@ -19,6 +19,7 @@
       <plugin>
         <groupId>com.agilejava.maven.plugins</groupId>
         <artifactId>maven-overview-plugin</artifactId>
+        <version>testing</version>
         <configuration>
           <width>900</width>
           <height>900</height>
