@@ -381,6 +381,7 @@
     <license>
       <name>Apache License, Version 2.0</name>
       <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
     </license>
   </licenses>
   <developers>
@@ -391,6 +392,12 @@
     <developer>
       <id>hubert.iwaniuk</id>
       <name>Hubert Iwaniuk</name>
+      <email>neotyk@kungfoo.pl</email>
+      <organization>KungFoo</organization>
+      <roles>
+        <role>maintainer</role>
+        <role>developer</role>
+      </roles>
     </developer>
   </developers>
   <inceptionYear>2008</inceptionYear>
