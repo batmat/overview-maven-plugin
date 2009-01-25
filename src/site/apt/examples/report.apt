@@ -1,0 +1,32 @@
+		---
+		Maven Overview Plugin - Report configuration example
+		---
+		Hubert Iwaniuk
+		---
+		25 Jan 2009
+		---
+
+Report configuration example
+
+  Add this to your pom.xml
+
++---+
+<project>
+ ...
+ <reporting>
+  <plugins>
+   ...
+   <plugin>
+    <groupId>com.googlecode.maven-overview-plugin</groupId>
+    <artifactId>maven-overview-plugin</artifactId>
+    <configuration>
+     <width>900</width>
+     <height>900</height>
+     <includes>com.agilejava.maven.plugins, org.apache.maven.reporting, org.apache.maven.shared, jung, org.apache.maven.doxia, commons-collections, colt, concurrent</includes>
+    </configuration>
+   </plugin>
+  </plugins>
+ </reporting>
+</project>
++---+
+

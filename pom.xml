@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <!-- The Basics -->
-  <groupId>com.agilejava.maven.plugins</groupId>
+  <groupId>com.googlecode.maven-overview-plugin</groupId>
   <artifactId>maven-overview-plugin</artifactId>
   <version>1.3-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
@@ -87,7 +87,7 @@
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>4.1</version>
+        <version>4.5</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -144,9 +144,10 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
-        <version>2.3</version>
+        <version>2.4</version>
         <configuration>
-          <source>1.5</source>
+          <targetJdk>1.5</targetJdk>
+          <linkXRef>true</linkXRef>
         </configuration>
       </plugin>
       <plugin>
@@ -178,7 +179,7 @@
       <extension>
         <groupId>org.jvnet.wagon-svn</groupId>
         <artifactId>wagon-svn</artifactId>
-        <version>1.8</version>
+        <version>1.9</version>
       </extension>
     </extensions>
     <resources>
@@ -199,7 +200,7 @@
         <artifactId>maven-jxr-plugin</artifactId>
       </plugin>
       <plugin>
-        <groupId>com.agilejava.maven.plugins</groupId>
+        <groupId>com.googlecode.maven-overview-plugin</groupId>
         <artifactId>maven-overview-plugin</artifactId>
         <configuration>
           <width>900</width>
@@ -355,20 +356,16 @@
   </reporting>
   <distributionManagement>
     <site>
-      <id>googlecode.svn.server</id>
+      <id>googlecode</id>
       <url>svn:https://maven-overview-plugin.googlecode.com/svn/site</url>
     </site>
     <snapshotRepository>
-      <id>googlecode.svn.server</id>
-      <url>
-        svn:https://maven-overview-plugin.googlecode.com/svn/snapshot-repository
-      </url>
+      <id>googlecode</id>
+      <url>svn:https://kungfoo-m2.googlecode.com/svn/snapshot-repo</url>
     </snapshotRepository>
     <repository>
-      <id>googlecode.svn.server</id>
-      <url>
-        svn:https://maven-overview-plugin.googlecode.com/svn/release-repository
-      </url>
+      <id>googlecode</id>
+      <url>svn:https://kungfoo-m2.googlecode.com/svn/release-repo</url>
     </repository>
   </distributionManagement>
 
@@ -413,18 +410,16 @@
   </scm>
   <mailingLists>
     <mailingList>
-      <name>No Mailing List</name>
+      <name>User List</name>
+      <post>maven-overview-plugin-discuss@googlegroups.com</post>
+      <archive>http://groups.google.com/group/maven-overview-plugin-discuss</archive>
+    </mailingList>
+    <mailingList>
+      <name>Announce List</name>
+      <post>maven-overview-plugin-announce@googlegroups.com</post>
+      <archive>http://groups.google.com/group/maven-overview-plugin-announce</archive>
     </mailingList>
   </mailingLists>
-  <repositories>
-    <!-- waron-svn id located here -->
-    <repository>
-      <id>maven2-repository.dev.java.net</id>
-      <name>Java.net Repository for Maven</name>
-      <url>http://download.java.net/maven/2/</url>
-      <layout>default</layout>
-    </repository>
-  </repositories>
   <profiles>
     <profile>
       <id>release-profile</id>
@@ -488,6 +483,8 @@
             </configuration>
             <executions>
               <execution>
+                <id>site</id>
+                <phase>site</phase>
                 <goals>
                   <goal>generate</goal>
                 </goals>

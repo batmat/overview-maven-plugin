@@ -12,6 +12,6 @@ Command Line Usage
   ({{{usage.html}instruction here}}) you can run it from command line like that:
   
 +---+
-mvn com.agilejava.maven.plugins:maven-overview-plugin:1.1-SNAPSHOT:overview
+mvn com.googlecode.maven-overview-plugin:maven-overview-plugin:1.3:overview
 +---+
 

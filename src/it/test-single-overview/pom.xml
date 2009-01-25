@@ -19,7 +19,7 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>com.agilejava.maven.plugins</groupId>
+        <groupId>com.googlecode.maven-overview-plugin</groupId>
         <artifactId>maven-overview-plugin</artifactId>
         <version>testing</version>
         <configuration>

@@ -1,1 +1,1 @@
-clean com.agilejava.maven.plugins:maven-overview-plugin:overview
+clean com.googlecode.maven-overview-plugin:maven-overview-plugin:testing:overview

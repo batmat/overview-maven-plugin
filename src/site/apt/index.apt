@@ -23,4 +23,5 @@ Maven Overview Plugin
 
 * Examples
 
+  To see how to use plugin integration with site generation go {{{examples/report.html}here}}.
   To see how to use plugin from command line go {{{examples/command.html}here}}.
