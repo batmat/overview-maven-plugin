@@ -7,6 +7,8 @@ import org.apache.maven.plugin.logging.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.agilejava.maven.plugins.overview.Exclusion;
+
 /**
  * Artifact filtering.
  * <p/>
@@ -39,9 +41,9 @@ import java.util.List;
 class MyArtifactFilter implements ArtifactFilter {
 
   /**
-   * List of excluded artifactIDs.
+   * List of {@link Exclusion}s.
    */
-  private List<String> excludes;
+  private List<Exclusion> exclusions;
   /**
    * List of included groupIDs.
    */
@@ -51,17 +53,17 @@ class MyArtifactFilter implements ArtifactFilter {
    * Ctor setting finltering parameters.
    *
    * @param includes List of included groupIDs.
-   * @param excludes List of excluded artifactIDs.
+   * @param exclusions List of {@link Exclusion}s.
    * @param log      logger.
    */
   public MyArtifactFilter(
-      final List < String > includes, List < String > excludes, final Log log) {
-    this.excludes = excludes != null ? new ArrayList < String > (excludes) : null;
+      final List < String > includes, List<Exclusion> exclusions, final Log log) {
+    this.exclusions = exclusions;
     this.includes = includes != null ? new ArrayList <String> (includes) : null;
     log.debug(
         "MyArtifactFilter: includes: \'" + includes + "\'.");
     log.debug(
-        "MyArtifactFilter: excludes: \'" + excludes + "\'.");
+        "MyArtifactFilter: excludes: \'" + exclusions + "\'.");
   }
 
   /**
@@ -78,7 +80,7 @@ class MyArtifactFilter implements ArtifactFilter {
       }
       return incl;
     } else
-      return excludes == null || excludes.isEmpty() || !excludes.contains(
+      return exclusions == null || exclusions.isEmpty() || !exclusions.contains(
           artifact.getId());
   }
 }

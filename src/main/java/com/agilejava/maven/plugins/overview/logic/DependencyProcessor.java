@@ -22,7 +22,7 @@ import java.util.Map;
 
 /** Logic of dependency processing. */
 public class DependencyProcessor {
-  private List<String> excludes;
+  private List<Exclusion> exclusions;
   private List<String> includes;
   private DependencyTreeBuilder dependencyTreeBuilder;
   private ArtifactRepository localRepository;
@@ -36,7 +36,7 @@ public class DependencyProcessor {
    *
    * @param includes               String with coma separated includes groupsIds
    *                               like: "com.gr1, com.gr2"
-   * @param excludes               String with coma separated excluded artifacts
+   * @param exclusions               String with coma separated excluded artifacts
  *                               like: "artifact1,artifact2".
    * @param dependencyTreeBuilder  Maven toolbox.
    * @param localRepository        Maven toolbox.
@@ -47,7 +47,7 @@ public class DependencyProcessor {
    */
   public DependencyProcessor(
       String includes,
-      List<Exclusion> excludes,
+      List<Exclusion> exclusions,
       DependencyTreeBuilder dependencyTreeBuilder,
       ArtifactRepository localRepository,
       ArtifactFactory factory,
@@ -60,10 +60,7 @@ public class DependencyProcessor {
     this.artifactMetadataSource = artifactMetadataSource;
     this.collector = collector;
     this.abstractMojo = abstractMojo;
-    final String[] exclSplited = excludes.split(",");
-    processSplitedFilter(
-        this.excludes = new ArrayList<String>(exclSplited.length), exclSplited,
-        "excludes");
+    this.exclusions = new ArrayList<Exclusion> (exclusions);
     final String[] inclSplited = includes.split(",");
     processSplitedFilter(
         this.includes = new ArrayList<String>(inclSplited.length), inclSplited,
@@ -72,7 +69,7 @@ public class DependencyProcessor {
       this.abstractMojo.getLog()
           .debug("DependencyProcessor: includes: " + this.includes);
       this.abstractMojo.getLog()
-          .debug("DependencyProcessor: excludes: " + this.excludes);
+          .debug("DependencyProcessor: excludes: " + this.exclusions);
     }
   }
 
@@ -114,7 +111,7 @@ public class DependencyProcessor {
         = new HashMap<Artifact, ArtifactVertex>();
 
     final MyArtifactFilter myArtifactFilter = new MyArtifactFilter(
-        includes, excludes, abstractMojo.getLog());
+        includes, exclusions, abstractMojo.getLog());
     // For pom project, process all modules.
     for (Object reactorProject : reactorProjects) {
       process(

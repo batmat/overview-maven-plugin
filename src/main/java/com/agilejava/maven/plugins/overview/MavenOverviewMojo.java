@@ -49,7 +49,7 @@ public class MavenOverviewMojo extends AbstractMavenReport {
    *
    * @parameter
    */
-  private List<Exclusion> exclusions;
+  List<Exclusion> exclusions;
 
   /**
    * GroupIDs of artifacts to be included.
