@@ -4,6 +4,7 @@ import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 
 import java.io.File;
 import java.util.Locale;
+import java.util.ArrayList;
 
 /**
  * Basic integration test.
@@ -114,14 +115,14 @@ public class OverviewMojoTest extends AbstractMojoTestCase {
     /**
      * Tests the proper discovery and configuration of the mojo.
      * <p/>
-     * Excludes set.
+     * Exclusions set.
      *
      * @throws Exception Failure.
      */
-    public void testOverviewTestEnvironmentExcludesSet() throws Exception {
+    public void testOverviewTestEnvironmentMultipleExlusionsSet() throws Exception {
         File testPom = new File(
           getBasedir(),
-          "target/test-classes/unit/overview-basic-test/plugin-config-excludes.xml");
+          "target/test-classes/unit/overview-basic-test/plugin-config-exclusions.xml");
         MavenOverviewMojo mojo = (MavenOverviewMojo) lookupMojo(
           "overview", testPom);
         assertNotNull(mojo);
@@ -150,23 +151,42 @@ public class OverviewMojoTest extends AbstractMojoTestCase {
           mojo.getGraphLocationInSite());
         assertEquals(
           "Includes should be empty.", 0, mojo.includes.length());
-        assertEquals(
-          "Excludes should be 'g:a1:jar:1.0, g:a2:jar:1.0'.",
-          "g:a1:jar:1.0, g:a2:jar:1.0", mojo.exclusions);
+      ArrayList<Exclusion> exclusionArrayList = new ArrayList<Exclusion>(2);
+      Exclusion excl1 = new Exclusion();
+      excl1.setGroupId("g");
+      excl1.setArtifactId("a1");
+      excl1.setPackaging("jar");
+      excl1.setVersion("1.0");
+      exclusionArrayList.add(excl1);
+      Exclusion excl2 = new Exclusion();
+      excl2.setGroupId("g");
+      excl2.setArtifactId("a2");
+      excl2.setPackaging("jar");
+      excl2.setVersion("1.0");
+      exclusionArrayList.add(excl2);
+      assertEquals(
+          "Wron exclusions size.",
+          exclusionArrayList.size(), mojo.exclusions.size());
+      assertEquals(
+          "Wron exclusion[0].",
+          exclusionArrayList.get(0), mojo.exclusions.get(0));
+      assertEquals(
+          "Wron exclusion[1].",
+          exclusionArrayList.get(1), mojo.exclusions.get(1));
     }
 
     /**
      * Tests the proper discovery and configuration of the mojo.
      * <p/>
-     * Includes and Excludes set.
+     * Includes and Exclusions set.
      *
      * @throws Exception Failure.
      */
-    public void testOverviewTestEnvironmentIncludesExcludesSet()
+    public void testOverviewTestEnvironmentIncludesExclusionsSet()
       throws Exception {
         File testPom = new File(
           getBasedir(),
-          "target/test-classes/unit/overview-basic-test/plugin-config-includes-excludes.xml");
+          "target/test-classes/unit/overview-basic-test/plugin-config-includes-exclusions.xml");
         MavenOverviewMojo mojo = (MavenOverviewMojo) lookupMojo(
           "overview", testPom);
         assertNotNull(mojo);
@@ -196,8 +216,27 @@ public class OverviewMojoTest extends AbstractMojoTestCase {
         assertEquals(
           "Includes should be 'org.test1, org.test2'.", "org.test1, org.test2",
           mojo.includes);
-        assertEquals(
-          "Excludes should be 'g:a1:jar:1.0, g:a2:jar:1.0'.",
-          "g:a1:jar:1.0, g:a2:jar:1.0", mojo.exclusions);
+      ArrayList<Exclusion> exclusionArrayList = new ArrayList<Exclusion>(2);
+      Exclusion excl1 = new Exclusion();
+      excl1.setGroupId("g");
+      excl1.setArtifactId("a1");
+      excl1.setPackaging("jar");
+      excl1.setVersion("1.0");
+      exclusionArrayList.add(excl1);
+      Exclusion excl2 = new Exclusion();
+      excl2.setGroupId("g");
+      excl2.setArtifactId("a2");
+      excl2.setPackaging("jar");
+      excl2.setVersion("1.0");
+      exclusionArrayList.add(excl2);
+      assertEquals(
+          "Wron exclusions size.",
+          exclusionArrayList.size(), mojo.exclusions.size());
+      assertEquals(
+          "Wron exclusion[0].",
+          exclusionArrayList.get(0), mojo.exclusions.get(0));
+      assertEquals(
+          "Wron exclusion[1].",
+          exclusionArrayList.get(1), mojo.exclusions.get(1));
     }
 }

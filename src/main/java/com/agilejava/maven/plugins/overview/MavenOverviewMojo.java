@@ -41,11 +41,22 @@ import java.util.ResourceBundle;
 public class MavenOverviewMojo extends AbstractMavenReport {
 
   /**
-   * TODO: update docs
-   *
-   * IDs of artifact to be excluded.
+   * Exclusions configuration.
    * <p/>
-   * Coma separated list of excluded artifacts IDs.
+   * <pre>
+   * &lt;exclusions&gt;
+   *  &lt;exclusion&gt; &lt;!-- all info provided, all have to match to exclude --&gt;
+   *   &lt;groupId&gt;groupRegExp&lt;/groupId&gt;
+   *   &lt;artifactId&gt;artivaftRegExp&lt;/artifactId&gt;
+   *   &lt;packaging&gt;packaginRegExp&lt;/packaging&gt;
+   *   &lt;version&gt;versionRegExp&lt;/version&gt;
+   *   &lt;scope&gt;scopeRegExp&lt;/scope&gt;
+   *  &lt;/exclusion&gt;
+   *  &lt;exclusion&gt; &lt;!-- only one provided --&gt;
+   *   &lt;scope&gt;scopeRegExp&lt;/scope&gt;
+   *  &lt;/exclusion&gt;
+   * &lt;/exclusions&gt;
+   * </pre>
    *
    * @parameter
    */
@@ -246,13 +257,13 @@ public class MavenOverviewMojo extends AbstractMavenReport {
     getLog().debug("MavenOverviewMojo: outputDirectory: " + outputDirectory);
     getLog().debug(
         "MavenOverviewMojo: getReportOutputDirectory(): "
-        + getReportOutputDirectory());
+            + getReportOutputDirectory());
   }
 
   private void generateOverview() {
     getLog().debug(
         "MavenOverviewMojo: " + pluginName + " v" + pluginVersion + " build by "
-        + pluginBuilder);
+            + pluginBuilder);
     File outputFile = new File(getGraphLocation());
     if (!outputFile.exists()) {
       getLog().debug(
@@ -268,7 +279,7 @@ public class MavenOverviewMojo extends AbstractMavenReport {
         && !includes.contains(project.getGroupId())) {
       getLog().debug(
           "MavenOverviewMojo: addind projects groupId ("
-          + project.getGroupId() + ") to includes (" + includes + ").");
+              + project.getGroupId() + ") to includes (" + includes + ").");
       includes += ", " + project.getGroupId();
     }
     getLog().debug("MavenOverviewMojo: Collecting data");
@@ -342,9 +353,9 @@ public class MavenOverviewMojo extends AbstractMavenReport {
   private String getGraphLocation() {
     getLog().debug(
         "MavenOverviewMojo: getReportOutputDirectory(): "
-        + getReportOutputDirectory().getAbsolutePath());
+            + getReportOutputDirectory().getAbsolutePath());
     return getReportOutputDirectory().getAbsolutePath() + File.separator
-           + getGraphLocationInSite();
+        + getGraphLocationInSite();
   }
 
   public String getGraphLocationInSite() {

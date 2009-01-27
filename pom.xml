@@ -203,10 +203,15 @@
         <groupId>com.googlecode.maven-overview-plugin</groupId>
         <artifactId>maven-overview-plugin</artifactId>
         <configuration>
-          <width>900</width>
-          <height>900</height>
+          <width>500</width>
+          <height>500</height>
           <suppressedScopes />
-          <includes>com.agilejava.maven.plugins, org.apache.maven.reporting, org.apache.maven.shared, jung, org.apache.maven.doxia, commons-collections, colt, concurrent</includes>
+          <includes>com.googlecode.maven-overview-plugin, org.apache.maven.reporting, org.apache.maven.shared, jung, org.apache.maven.doxia, commons-collections, colt, concurrent</includes>
+          <exclusions>
+            <exclusion>
+              <scope>test</scope>
+            </exclusion>
+          </exclusions>
         </configuration>
       </plugin>
       <plugin>

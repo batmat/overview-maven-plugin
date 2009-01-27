@@ -50,16 +50,16 @@ class MyArtifactFilter implements ArtifactFilter {
   private List<String> includes;
 
   /**
-   * Ctor setting finltering parameters.
+   * Ctor setting filtering parameters.
    *
-   * @param includes List of included groupIDs.
+   * @param includes   List of included groupIDs.
    * @param exclusions List of {@link Exclusion}s.
-   * @param log      logger.
+   * @param log        logger.
    */
   public MyArtifactFilter(
-      final List < String > includes, List<Exclusion> exclusions, final Log log) {
+      final List<String> includes, List<Exclusion> exclusions, final Log log) {
     this.exclusions = exclusions;
-    this.includes = includes != null ? new ArrayList <String> (includes) : null;
+    this.includes = includes != null ? new ArrayList<String>(includes) : null;
     log.debug(
         "MyArtifactFilter: includes: \'" + includes + "\'.");
     log.debug(
@@ -70,17 +70,36 @@ class MyArtifactFilter implements ArtifactFilter {
    * {@inheritDoc}
    */
   public boolean include(Artifact artifact) {
+    return isIncluded(artifact) & !isExcluded(artifact);
+  }
+
+  private boolean isIncluded(Artifact artifact) {
+    boolean included = false;
     if (includes != null && !includes.isEmpty()) {
-      boolean incl = false;
       for (String include : includes) {
         if (artifact.getGroupId().startsWith(include)) {
-          incl = true;
+          included = true;
           break;
         }
       }
-      return incl;
-    } else
-      return exclusions == null || exclusions.isEmpty() || !exclusions.contains(
-          artifact.getId());
+    } else {
+      included = true;
+    }
+    return included;
+  }
+
+  private boolean isExcluded(Artifact artifact) {
+    boolean excluded = false;
+    if (exclusions != null && !exclusions.isEmpty()) {
+      for (Exclusion exclusion : exclusions) {
+        if (exclusion.matches(artifact)) {
+          excluded = true;
+          break;
+        }
+      }
+    } else {
+      excluded = false;
+    }
+    return excluded;
   }
 }

@@ -60,7 +60,7 @@ public class DependencyProcessor {
     this.artifactMetadataSource = artifactMetadataSource;
     this.collector = collector;
     this.abstractMojo = abstractMojo;
-    this.exclusions = new ArrayList<Exclusion> (exclusions);
+    this.exclusions = exclusions;
     final String[] inclSplited = includes.split(",");
     processSplitedFilter(
         this.includes = new ArrayList<String>(inclSplited.length), inclSplited,

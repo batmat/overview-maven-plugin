@@ -8,7 +8,7 @@
 
 Report configuration example
 
-  Here is an example how {{{http://code.google.com/p/maven-overview-plugin/}}Maven Overview Plugin} uses itself.
+  Here is an example how {{{http://code.google.com/p/maven-overview-plugin}Maven Overview Plugin}} uses itself.
 
 +---+
 <project>
@@ -20,9 +20,14 @@ Report configuration example
     <groupId>com.googlecode.maven-overview-plugin</groupId>
     <artifactId>maven-overview-plugin</artifactId>
     <configuration>
-     <width>900</width>
-     <height>900</height>
+     <width>500</width>
+     <height>500</height>
      <includes>com.agilejava.maven.plugins, org.apache.maven.reporting, org.apache.maven.shared, jung, org.apache.maven.doxia, commons-collections, colt, concurrent</includes>
+     <exclusions>
+      <exclusion>
+       <scope>test</scope>
+      </exclusion>
+     </exclusions>
     </configuration>
    </plugin>
   </plugins>

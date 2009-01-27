@@ -11,7 +11,20 @@
           <!-- default
           <suppressedScopes>compile</suppressedScopes>
           -->
-          <excludes>g:a1:jar:1.0, g:a2:jar:1.0</excludes>
+          <exclusions>
+            <exclusion>
+              <groupId>g</groupId>
+              <artifactId>a1</artifactId>
+              <packaging>jar</packaging>
+              <version>1.0</version>
+            </exclusion>
+            <exclusion>
+              <groupId>g</groupId>
+              <artifactId>a2</artifactId>
+              <packaging>jar</packaging>
+              <version>1.0</version>
+            </exclusion>
+          </exclusions>
         </configuration>
       </plugin>
     </plugins>
