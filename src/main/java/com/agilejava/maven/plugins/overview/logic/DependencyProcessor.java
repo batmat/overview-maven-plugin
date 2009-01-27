@@ -1,6 +1,7 @@
 package com.agilejava.maven.plugins.overview.logic;
 
 import com.agilejava.maven.plugins.overview.vo.ArtifactVertex;
+import com.agilejava.maven.plugins.overview.Exclusion;
 import edu.uci.ics.jung.graph.DirectedGraph;
 import edu.uci.ics.jung.graph.impl.DirectedSparseGraph;
 import org.apache.maven.artifact.Artifact;
@@ -36,7 +37,7 @@ public class DependencyProcessor {
    * @param includes               String with coma separated includes groupsIds
    *                               like: "com.gr1, com.gr2"
    * @param excludes               String with coma separated excluded artifacts
-   *                               like: "artifact1,artifact2".
+ *                               like: "artifact1,artifact2".
    * @param dependencyTreeBuilder  Maven toolbox.
    * @param localRepository        Maven toolbox.
    * @param factory                Maven toolbox.
@@ -46,7 +47,7 @@ public class DependencyProcessor {
    */
   public DependencyProcessor(
       String includes,
-      String excludes,
+      List<Exclusion> excludes,
       DependencyTreeBuilder dependencyTreeBuilder,
       ArtifactRepository localRepository,
       ArtifactFactory factory,

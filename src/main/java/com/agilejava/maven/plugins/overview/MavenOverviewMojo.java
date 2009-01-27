@@ -41,13 +41,15 @@ import java.util.ResourceBundle;
 public class MavenOverviewMojo extends AbstractMavenReport {
 
   /**
+   * TODO: update docs
+   *
    * IDs of artifact to be excluded.
    * <p/>
    * Coma separated list of excluded artifacts IDs.
    *
-   * @parameter expression="${excludes}"
+   * @parameter
    */
-  String excludes = "";
+  private List<Exclusion> exclusions;
 
   /**
    * GroupIDs of artifacts to be included.
@@ -272,7 +274,7 @@ public class MavenOverviewMojo extends AbstractMavenReport {
     getLog().debug("MavenOverviewMojo: Collecting data");
     DependencyProcessor dependencyProcessor = new DependencyProcessor(
         includes,
-        excludes,
+        exclusions,
         dependencyTreeBuilder,
         localRepository,
         artifactFactory,
