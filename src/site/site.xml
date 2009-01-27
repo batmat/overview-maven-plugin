@@ -3,6 +3,9 @@
     <body>
         <links>
             <item name="Maven 2" href="http://maven.apache.org/"/>
+            <item name="KungFoo Repo" href="http://code.google.com/p/kungfoo-m2/"/>
+            <item name="Maven Overview Plugin" href="http://code.google.com/p/maven-overview-plugin/"/>
+            <item name="Source Tree" href="http://github.com/neotyk/maven-overview-plugin/tree/master"/>
         </links>
 
         <menu name="Overview">
@@ -14,6 +17,7 @@
 
         <menu name="Examples">
             <item name="CommandLine" href="examples/command.html"/>
+            <item name="Report" href="examples/report.html"/>
         </menu>
 
         <menu ref="reports"/>

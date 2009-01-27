@@ -8,7 +8,7 @@
 
 Report configuration example
 
-  Add this to your pom.xml
+  Here is an example how {{{http://code.google.com/p/maven-overview-plugin/}}Maven Overview Plugin} uses itself.
 
 +---+
 <project>

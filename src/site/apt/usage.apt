@@ -25,8 +25,7 @@ Installing
   </pluginRepositories>
 +---+
 
-  Once
-  <a href="http://code.google.com/p/maven-overview-plugin/issues/detail?id=14">#14</a>
+  Once {{{http://code.google.com/p/maven-overview-plugin/issues/detail?id=14}}#14}
   is solved plugin will be available in Maven Central Repository.
 
 Usage
