@@ -170,7 +170,7 @@ public class MavenOverviewMojo extends AbstractMavenReport {
   private static final String DESCRIPTION = "report.overview.description";
   private static final String NAME = "report.overview.name";
   private static ResourceBundle info = ResourceBundle
-      .getBundle(BUNDLE_NAME, Locale.getDefault());
+      .getBundle(BUNDLE_NAME, Locale.US);
   /**
    * Plugin Information
    */

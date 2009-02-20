@@ -91,6 +91,7 @@ public class Exclusion {
       return false;
     if (scope != null ? !scope.equals(exclusion.scope) : exclusion.scope != null)
       return false;
+    //noinspection RedundantIfStatement
     if (version != null ? !version.equals(exclusion.version) : exclusion.version != null)
       return false;
 

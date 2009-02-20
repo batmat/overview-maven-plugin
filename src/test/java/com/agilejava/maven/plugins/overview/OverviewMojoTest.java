@@ -178,6 +178,55 @@ public class OverviewMojoTest extends AbstractMojoTestCase {
     /**
      * Tests the proper discovery and configuration of the mojo.
      * <p/>
+     * Exclusions set but empty.
+     *
+     * @throws Exception Failure.
+     */
+    public void testOverviewTestEnvironmentExlusionsSetEmpty() throws Exception {
+        File testPom = new File(
+          getBasedir(),
+          "target/test-classes/unit/overview-basic-test/plugin-config-empty-exclusions.xml");
+        MavenOverviewMojo mojo = (MavenOverviewMojo) lookupMojo(
+          "overview", testPom);
+        assertNotNull(mojo);
+        assertEquals(
+          "Width should be set to value from test configuration.",
+          EXPECTED_WIDTH, mojo.width);
+        assertEquals(
+          "Height should be set to value from test configuration.",
+          EXPECTED_HEIGHT, mojo.height);
+        assertEquals(
+          "Vertex full labeling should be from test configuration.", false,
+          mojo.vertexFullLabel);
+        assertEquals(
+          "Suppressed scopes should be default 'compile'.", "compile",
+          mojo.suppressedScopes);
+        assertNotNull(
+          "SiteRenderer should not be null.", mojo.getSiteRenderer());
+        assertNotNull("OutputName should not be null.", mojo.getOutputName());
+        assertNotNull(
+          "Name should not be null.", mojo.getName(Locale.getDefault()));
+        assertNotNull(
+          "getDescription should not be null.",
+          mojo.getDescription(Locale.getDefault()));
+        assertNotNull(
+          "GraphLocationInSite should not be null.",
+          mojo.getGraphLocationInSite());
+        assertEquals(
+          "Includes should be empty.", 0, mojo.includes.length());
+      ArrayList<Exclusion> exclusionArrayList = new ArrayList<Exclusion>(1);
+      exclusionArrayList.add(new Exclusion());
+      assertEquals(
+          "Wron exclusions size.",
+          exclusionArrayList.size(), mojo.exclusions.size());
+      assertEquals(
+          "Wron exclusion[0].",
+          exclusionArrayList.get(0), mojo.exclusions.get(0));
+    }
+
+    /**
+     * Tests the proper discovery and configuration of the mojo.
+     * <p/>
      * Includes and Exclusions set.
      *
      * @throws Exception Failure.
