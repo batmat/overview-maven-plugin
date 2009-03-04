@@ -359,6 +359,6 @@ public class MavenOverviewMojo extends AbstractMavenReport {
   }
 
   public String getGraphLocationInSite() {
-    return "images" + File.separator + getOutputName() + ".png";
+    return "images/" + getOutputName() + ".png";
   }
 }
