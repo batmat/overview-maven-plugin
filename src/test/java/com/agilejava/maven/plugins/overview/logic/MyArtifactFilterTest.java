@@ -5,9 +5,12 @@ import org.apache.maven.artifact.DefaultArtifact;
 import org.apache.maven.artifact.handler.DefaultArtifactHandler;
 import org.apache.maven.artifact.versioning.VersionRange;
 import org.apache.maven.plugin.testing.SilentLog;
+import org.apache.maven.project.MavenProject;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import com.agilejava.maven.plugins.overview.Exclusion;
 
@@ -16,13 +19,16 @@ import com.agilejava.maven.plugins.overview.Exclusion;
  */
 public class MyArtifactFilterTest extends TestCase {
 
+	private List<String> scopes = null; //TODO: ADD TESTS FOR THIS
+	private MavenProject rootProject = null; //TODO: ADD TESTS FOR THIS
+
   /**
    * {In,Ex}cludes list both null.
    */
   @Test
   public void testBothNull() {
     MyArtifactFilter filter = new MyArtifactFilter(
-        null, null, new SilentLog());
+        rootProject, null, null, scopes, new SilentLog());
     assertTrue(
         filter.include(
             new DefaultArtifact(
@@ -36,7 +42,7 @@ public class MyArtifactFilterTest extends TestCase {
   @Test
   public void testExcludeEmptyIncludesNull() {
     MyArtifactFilter filter = new MyArtifactFilter(
-        null, new ArrayList<Exclusion>(), new SilentLog());
+        rootProject, null, new ArrayList<Exclusion>(), scopes, new SilentLog());
     assertTrue(
         filter.include(
             new DefaultArtifact(
@@ -54,7 +60,7 @@ public class MyArtifactFilterTest extends TestCase {
     exclusion.setScope("test");
     excludedList.add(exclusion);
     MyArtifactFilter filter = new MyArtifactFilter(
-        null, excludedList, new SilentLog());
+        rootProject, null, excludedList, scopes, new SilentLog());
     assertFalse(
         "Expected Exclusion to filter artifact out.",
         filter.include(
@@ -77,7 +83,7 @@ public class MyArtifactFilterTest extends TestCase {
     excludedList.add(exclusion);
 
     MyArtifactFilter filter = new MyArtifactFilter(
-        null, excludedList, new SilentLog());
+        rootProject, null, excludedList, scopes, new SilentLog());
     assertTrue(
         filter.include(
             new DefaultArtifact(
@@ -91,7 +97,7 @@ public class MyArtifactFilterTest extends TestCase {
   @Test
   public void testIncludeEmptyExcludesNull() {
     MyArtifactFilter filter = new MyArtifactFilter(
-        new ArrayList<String>(), null, new SilentLog());
+        rootProject, new ArrayList<String>(), null, scopes, new SilentLog());
     assertTrue(
         filter.include(
             new DefaultArtifact(
@@ -107,7 +113,7 @@ public class MyArtifactFilterTest extends TestCase {
     final ArrayList<String> includes = new ArrayList<String>();
     includes.add("testGroupID");
     MyArtifactFilter filter = new MyArtifactFilter(
-        includes, null, new SilentLog());
+        rootProject, includes, null, scopes, new SilentLog());
     assertTrue(
         filter.include(
             new DefaultArtifact(
@@ -123,11 +129,32 @@ public class MyArtifactFilterTest extends TestCase {
     final ArrayList<String> includes = new ArrayList<String>();
     includes.add("testGroupID");
     MyArtifactFilter filter = new MyArtifactFilter(
-        includes, null, new SilentLog());
+        rootProject, includes, null, scopes, new SilentLog());
     assertFalse(
         filter.include(
             new DefaultArtifact(
                 "notTestGroupID", "s", VersionRange.createFromVersion("1.0"),
                 "test", "jar", "", new DefaultArtifactHandler())));
   }
+  
+  
+  /**
+   * Test that artifacts with scope "test" are included but not artifacts with scope "compile"
+   */
+  @Test
+  public void testScope() {
+    MyArtifactFilter filter = new MyArtifactFilter(
+        rootProject, null, null, Arrays.asList(new String[]{"test"}), new SilentLog());
+    assertTrue(
+        filter.include(
+            new DefaultArtifact(
+                "a.group.id", "myArtifactId", VersionRange.createFromVersion("1.0"),
+                "test", "jar", "", new DefaultArtifactHandler())));
+    assertFalse(
+            filter.include(
+                new DefaultArtifact(
+                    "a.group.id", "myArtifactId", VersionRange.createFromVersion("1.0"),
+                    "compile", "jar", "", new DefaultArtifactHandler())));
+  }
+  
 }

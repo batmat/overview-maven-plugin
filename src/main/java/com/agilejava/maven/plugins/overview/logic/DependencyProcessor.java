@@ -24,6 +24,8 @@ import java.util.Map;
 public class DependencyProcessor {
   private List<Exclusion> exclusions;
   private List<String> includes;
+  private int maxDepth;
+  private List<String> scopes;
   private DependencyTreeBuilder dependencyTreeBuilder;
   private ArtifactRepository localRepository;
   private ArtifactFactory factory;
@@ -48,6 +50,8 @@ public class DependencyProcessor {
   public DependencyProcessor(
       String includes,
       List<Exclusion> exclusions,
+      int maxDepth,
+      List<String> scopes,
       DependencyTreeBuilder dependencyTreeBuilder,
       ArtifactRepository localRepository,
       ArtifactFactory factory,
@@ -65,6 +69,10 @@ public class DependencyProcessor {
     processSplitedFilter(
         this.includes = new ArrayList<String>(inclSplited.length), inclSplited,
         "includes");
+
+    this.maxDepth = maxDepth;
+    this.scopes = scopes;
+    
     if (this.abstractMojo.getLog().isDebugEnabled()) {
       this.abstractMojo.getLog()
           .debug("DependencyProcessor: includes: " + this.includes);
@@ -101,17 +109,18 @@ public class DependencyProcessor {
 
   /**
    * Create dependency graph for project and sub-projects.
+ * @param rootProject TODO
+ * @param reactorProjects Sub projects.
    *
-   * @param reactorProjects Sub projects.
    * @return Graph representing dependency.
    */
-  public DirectedGraph createGraph(List reactorProjects) {
+  public DirectedGraph createGraph(MavenProject rootProject, List reactorProjects) {
     DirectedGraph graph = new DirectedSparseGraph();
     Map<Artifact, ArtifactVertex> processed
         = new HashMap<Artifact, ArtifactVertex>();
 
     final MyArtifactFilter myArtifactFilter = new MyArtifactFilter(
-        includes, exclusions, abstractMojo.getLog());
+        rootProject, includes, exclusions, scopes, abstractMojo.getLog());
     // For pom project, process all modules.
     for (Object reactorProject : reactorProjects) {
       process(

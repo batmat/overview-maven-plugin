@@ -24,6 +24,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -70,6 +71,22 @@ public class MavenOverviewMojo extends AbstractMavenReport {
    * @parameter expression="${includes}"
    */
   String includes = "";
+  
+  /**
+   * Maximum depth to pursue transitive dependencies
+   * <p/>
+   * 
+   * @parameter expression="${maxDepth}"
+   */
+  int maxDepth = -1;
+  
+  /**
+   * If specified, only the specified scopes are pursued when traversing the dependency tree
+   * <p/>
+   * 
+   * @parameter expression="${scopes}"
+   */
+  String[] scopes = null;
 
   /**
    * Rendered graph width in pixels.
@@ -286,6 +303,8 @@ public class MavenOverviewMojo extends AbstractMavenReport {
     DependencyProcessor dependencyProcessor = new DependencyProcessor(
         includes,
         exclusions,
+        maxDepth,
+        Arrays.asList(scopes),
         dependencyTreeBuilder,
         localRepository,
         artifactFactory,
@@ -294,7 +313,7 @@ public class MavenOverviewMojo extends AbstractMavenReport {
         this);
 
     getLog().debug("MavenOverviewMojo: Generating graph");
-    DirectedGraph graph = dependencyProcessor.createGraph(reactorProjects);
+    DirectedGraph graph = dependencyProcessor.createGraph(project, reactorProjects);
 
     getLog().debug("MavenOverviewMojo: Rendering graph");
     Layout layout = new KKLayout(graph);

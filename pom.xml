@@ -1,16 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
+ 
   <!-- The Basics -->
   <groupId>com.googlecode.maven-overview-plugin</groupId>
   <artifactId>maven-overview-plugin</artifactId>
   <version>1.4-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
-
+ 
   <prerequisites>
     <maven>2.0.6</maven>
   </prerequisites>
-
+ 
   <dependencies>
     <dependency>
       <groupId>org.apache.maven.reporting</groupId>
@@ -91,7 +91,7 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
+ 
   <!-- Build Settings -->
   <build>
     <!-- Change inherited settings. -->
@@ -373,7 +373,7 @@
       <url>svn:https://kungfoo-m2.googlecode.com/svn/release-repo</url>
     </repository>
   </distributionManagement>
-
+ 
   <!-- More Project Information -->
   <name>Maven Overview Plugin</name>
   <description>
@@ -409,7 +409,7 @@
   <organization>
     <name>Agile Java</name>
   </organization>
-
+ 
   <!-- Environment Settings -->
   <issueManagement>
     <url>http://code.google.com/p/maven-overview-plugin/issues/list</url>
@@ -435,14 +435,14 @@
   <profiles>
     <profile>
       <id>release-profile</id>
-
+ 
       <activation>
         <property>
           <name>performRelease</name>
           <value>true</value>
         </property>
       </activation>
-
+ 
       <build>
         <plugins>
           <!-- Attach Sources -->
@@ -459,7 +459,7 @@
               </execution>
             </executions>
           </plugin>
-
+ 
           <!-- Attach JavaDoc -->
           <plugin>
             <inherited>true</inherited>
@@ -474,7 +474,7 @@
               </execution>
             </executions>
           </plugin>
-
+ 
           <!-- Update Release Info -->
           <plugin>
             <inherited>true</inherited>
@@ -484,7 +484,7 @@
               <updateReleaseInfo>true</updateReleaseInfo>
             </configuration>
           </plugin>
-
+ 
           <!-- DOAP -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
