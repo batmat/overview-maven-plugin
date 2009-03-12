@@ -5,5 +5,5 @@ assert file.exists()
 log.debug("$file exists.")
 
 log.debug("Checking if $file has expected size.")
-assert file.size() > 3500
+assert file.size() > 2500
 log.debug("$file has expected size.")

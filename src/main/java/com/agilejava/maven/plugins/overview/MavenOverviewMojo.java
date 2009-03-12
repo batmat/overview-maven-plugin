@@ -300,6 +300,7 @@ public class MavenOverviewMojo extends AbstractMavenReport {
       includes += ", " + project.getGroupId();
     }
     getLog().debug("MavenOverviewMojo: Collecting data");
+    
     DependencyProcessor dependencyProcessor = new DependencyProcessor(
         includes,
         exclusions,

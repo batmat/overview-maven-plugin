@@ -35,6 +35,10 @@ public final class DependencyExtractor {
   protected class ExtractorDNV implements DependencyNodeVisitor {
     /** Depth of execution. */
     private int depth = 0;
+    
+    /** Maximum depth to pursue, -1 means infinite*/
+    private int maxDepth = -1;
+
     /** Graph. */
     private DirectedGraph graph;
     /** Mapping of Artifacts to Vertexes. */
@@ -56,16 +60,18 @@ public final class DependencyExtractor {
      * @param vertexMap      Cache of all nodes in <code>graph</code>.
      * @param artifactFilter Artifac filter. Remove this when https://jira.codehaus.org/browse/MSHARED-4
      *                       get's fixed.
+     * @param maxDepth TODO
      * @param logger         Maven logger.
      */
     public ExtractorDNV(
         final DirectedGraph directedGraph,
         final Map<Artifact, ArtifactVertex> vertexMap,
         final MyArtifactFilter artifactFilter,
-        final Log logger) {
+        int maxDepth, final Log logger) {
       this.graph = directedGraph;
       this.artifactVertexMap = vertexMap;
       this.artifactFilter = artifactFilter;
+      this.maxDepth = maxDepth;
       this.log = logger;
     }
 
@@ -86,7 +92,17 @@ public final class DependencyExtractor {
      *         node's children and proceed to its next sibling
      */
     public final boolean visit(final DependencyNode node) {
+
+    	
       Artifact artifact = node.getArtifact();
+
+      //Limit on maxDepth --> go into the node only if it is within the depth or has already been added to the graph
+      if ((maxDepth > 0 && depth > maxDepth) && !artifactVertexMap.containsKey(artifact))
+      {
+        depth++;
+    	return false;  
+      }
+      
       if (!artifactFilter.include(artifact)) {
         depth++;
         return false;
@@ -183,16 +199,17 @@ public final class DependencyExtractor {
    * Extracts graph from dependency node.
    *
    * @param node              Node to start extracting from.
-   * @param graph             Populate this graph with extracted dependencies.
-   * @param artifactVertexMap Storage for (artifact, vertex) mapping.
-   * @param log               Maven logger.
-   * @param artifactFilter    Artifact filter.
+ * @param graph             Populate this graph with extracted dependencies.
+ * @param artifactVertexMap Storage for (artifact, vertex) mapping.
+ * @param log               Maven logger.
+ * @param artifactFilter    Artifact filter.
+ * @param maxDepth TODO
    */
   public void extractGraph(
       final DependencyNode node, final DirectedGraph graph,
       final Map<Artifact, ArtifactVertex> artifactVertexMap, final Log log,
-      final MyArtifactFilter artifactFilter) {
+      final MyArtifactFilter artifactFilter, int maxDepth) {
     node.accept(
-        new ExtractorDNV(graph, artifactVertexMap, artifactFilter, log));
+        new ExtractorDNV(graph, artifactVertexMap, artifactFilter, maxDepth, log));
   }
 }

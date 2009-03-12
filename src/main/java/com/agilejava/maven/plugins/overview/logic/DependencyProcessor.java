@@ -151,7 +151,7 @@ public class DependencyProcessor {
     DependencyExtractor extractor = DependencyExtractor.getInstance();
     extractor.extractGraph(
         node, graph, processed, this.abstractMojo.getLog(),
-        artifactFilter);
+        artifactFilter, maxDepth);
   }
 
   private DependencyNode resolveProject(
