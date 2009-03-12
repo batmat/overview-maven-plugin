@@ -61,10 +61,10 @@ class MyArtifactFilter implements ArtifactFilter {
 
   /**
    * Ctor setting filtering parameters.
- * @param rootProject TODO
+ * @param rootProject Artifact of root project, this one should never be excluded.
  * @param includes   List of included groupIDs.
  * @param exclusions List of {@link Exclusion}s.
- * @param scopes TODO
+ * @param scopes List of included scopes.
  * @param log        logger.
    */
   public MyArtifactFilter(

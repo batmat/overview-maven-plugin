@@ -40,6 +40,8 @@ public class DependencyProcessor {
    *                               like: "com.gr1, com.gr2"
    * @param exclusions               String with coma separated excluded artifacts
  *                               like: "artifact1,artifact2".
+   * @param maxDepth Maximum depth of inclusions.
+   * @param scopes Scopes to be included.
    * @param dependencyTreeBuilder  Maven toolbox.
    * @param localRepository        Maven toolbox.
    * @param factory                Maven toolbox.
@@ -109,7 +111,7 @@ public class DependencyProcessor {
 
   /**
    * Create dependency graph for project and sub-projects.
- * @param rootProject TODO
+ * @param rootProject Artifact of root project, this one should never be excluded.
  * @param reactorProjects Sub projects.
    *
    * @return Graph representing dependency.

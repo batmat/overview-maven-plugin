@@ -1,26 +1,34 @@
 package com.agilejava.maven.plugins.overview.logic;
 
+import com.agilejava.maven.plugins.overview.Exclusion;
 import junit.framework.TestCase;
 import org.apache.maven.artifact.DefaultArtifact;
 import org.apache.maven.artifact.handler.DefaultArtifactHandler;
 import org.apache.maven.artifact.versioning.VersionRange;
 import org.apache.maven.plugin.testing.SilentLog;
+import org.apache.maven.plugin.testing.stubs.MavenProjectStub;
 import org.apache.maven.project.MavenProject;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.BlockJUnit4ClassRunner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-
-import com.agilejava.maven.plugins.overview.Exclusion;
 
 /**
  * MyArtifactFilter Tester.
  */
+@RunWith(BlockJUnit4ClassRunner.class)
 public class MyArtifactFilterTest extends TestCase {
 
-	private List<String> scopes = null; //TODO: ADD TESTS FOR THIS
-	private MavenProject rootProject = null; //TODO: ADD TESTS FOR THIS
+    private MavenProject rootProject = new MavenProjectStub();
+
+    @Before
+    public void before() {
+        rootProject.setGroupId("sampleGroupId");
+        rootProject.setArtifactId("sampleArtifactId");
+    }
 
   /**
    * {In,Ex}cludes list both null.
@@ -28,7 +36,7 @@ public class MyArtifactFilterTest extends TestCase {
   @Test
   public void testBothNull() {
     MyArtifactFilter filter = new MyArtifactFilter(
-        rootProject, null, null, scopes, new SilentLog());
+        rootProject, null, null, null, new SilentLog());
     assertTrue(
         filter.include(
             new DefaultArtifact(
@@ -42,7 +50,7 @@ public class MyArtifactFilterTest extends TestCase {
   @Test
   public void testExcludeEmptyIncludesNull() {
     MyArtifactFilter filter = new MyArtifactFilter(
-        rootProject, null, new ArrayList<Exclusion>(), scopes, new SilentLog());
+        rootProject, null, new ArrayList<Exclusion>(), null, new SilentLog());
     assertTrue(
         filter.include(
             new DefaultArtifact(
@@ -60,7 +68,7 @@ public class MyArtifactFilterTest extends TestCase {
     exclusion.setScope("test");
     excludedList.add(exclusion);
     MyArtifactFilter filter = new MyArtifactFilter(
-        rootProject, null, excludedList, scopes, new SilentLog());
+        rootProject, null, excludedList, null, new SilentLog());
     assertFalse(
         "Expected Exclusion to filter artifact out.",
         filter.include(
@@ -83,7 +91,7 @@ public class MyArtifactFilterTest extends TestCase {
     excludedList.add(exclusion);
 
     MyArtifactFilter filter = new MyArtifactFilter(
-        rootProject, null, excludedList, scopes, new SilentLog());
+        rootProject, null, excludedList, null, new SilentLog());
     assertTrue(
         filter.include(
             new DefaultArtifact(
@@ -97,7 +105,7 @@ public class MyArtifactFilterTest extends TestCase {
   @Test
   public void testIncludeEmptyExcludesNull() {
     MyArtifactFilter filter = new MyArtifactFilter(
-        rootProject, new ArrayList<String>(), null, scopes, new SilentLog());
+        rootProject, new ArrayList<String>(), null, null, new SilentLog());
     assertTrue(
         filter.include(
             new DefaultArtifact(
@@ -113,7 +121,7 @@ public class MyArtifactFilterTest extends TestCase {
     final ArrayList<String> includes = new ArrayList<String>();
     includes.add("testGroupID");
     MyArtifactFilter filter = new MyArtifactFilter(
-        rootProject, includes, null, scopes, new SilentLog());
+        rootProject, includes, null, null, new SilentLog());
     assertTrue(
         filter.include(
             new DefaultArtifact(
@@ -129,7 +137,7 @@ public class MyArtifactFilterTest extends TestCase {
     final ArrayList<String> includes = new ArrayList<String>();
     includes.add("testGroupID");
     MyArtifactFilter filter = new MyArtifactFilter(
-        rootProject, includes, null, scopes, new SilentLog());
+        rootProject, includes, null, null, new SilentLog());
     assertFalse(
         filter.include(
             new DefaultArtifact(
@@ -144,7 +152,7 @@ public class MyArtifactFilterTest extends TestCase {
   @Test
   public void testScope() {
     MyArtifactFilter filter = new MyArtifactFilter(
-        rootProject, null, null, Arrays.asList(new String[]{"test"}), new SilentLog());
+        rootProject, null, null, Arrays.asList("test"), new SilentLog());
     assertTrue(
         filter.include(
             new DefaultArtifact(
