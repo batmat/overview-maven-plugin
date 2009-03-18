@@ -41,7 +41,7 @@ Usage
       <plugin>
         <groupId>com.googlecode.maven-overview-plugin</groupId>
         <artifactId>maven-overview-plugin</artifactId>
-        <version>1.3</version>
+        <version>1.4</version>
       </plugin>
     </plugins>
   </reporting>
@@ -62,3 +62,14 @@ mvn com.googlecode.maven-overview-plugin:maven-overview-plugin:1.3:overview
   The artifact for which the diagram is created is rendered as a red dot.
   Direct dependencies are rendered orange.
   Brightness will increase if you start moving to the edges of the dependency graph.
+
+	
+	
+* Filtering
+  
+  There are several options for filtering undesired dependencies. Check out the {{{overview-mojo.html}available configuration options}} for the details, or {{{examples/report.html}the examples}} for how to configure the plugin.
+
+	
+	
+	
+	

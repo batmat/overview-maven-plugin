@@ -28,6 +28,11 @@ Report configuration example
        <scope>test</scope>
       </exclusion>
      </exclusions>
+     <maxDepth>2</maxDepth>
+     <scopes>
+       <scope>compile</scope>
+       <scope>runtime</scope>
+     </scopes>
     </configuration>
    </plugin>
   </plugins>

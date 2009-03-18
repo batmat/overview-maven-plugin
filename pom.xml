@@ -153,6 +153,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>cobertura-maven-plugin</artifactId>
+        <version>2.2</version>
         <executions>
           <execution>
             <goals>
@@ -164,6 +165,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>shitty-maven-plugin</artifactId>
+        <version>1.0-alpha-3</version>
         <executions>
           <execution>
             <goals>

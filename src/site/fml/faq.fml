@@ -10,5 +10,13 @@
                 </p>
             </answer>
         </faq>
+        <faq id="question">
+            <question>I have a complex dependency graph, how can I make it less "messy"?</question>
+            <answer>
+                <p>
+									Since version 1.4 you can use the &lt;scopes&gt; and &lt;maxDepth&gt; tags in the configuration to reduce the complexity of the graph. See <a href="usage.html">usage</a> for more details.
+                </p>
+            </answer>
+        </faq>
     </part>
 </faqs>
