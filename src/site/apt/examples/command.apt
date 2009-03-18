@@ -9,7 +9,7 @@
 Command Line Usage
 
   Once you have maven-overview-plugin in your local repository
-  ({{{usage.html}instruction here}}) you can run it from command line like that:
+  ({{{../usage.html}instruction here}}) you can run it from command line like this:
   
 +---+
 mvn com.googlecode.maven-overview-plugin:maven-overview-plugin:1.4:overview
