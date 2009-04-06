@@ -418,9 +418,8 @@
   </issueManagement>
   <ciManagement />
   <scm>
-    <connection>scm:svn:http://maven-overview-plugin.googlecode.com/svn/trunk</connection>
-    <developerConnection>scm:svn:https://maven-overview-plugin.googlecode.com/svn/trunk</developerConnection>
-    <url>http://code.google.com/p/maven-overview-plugin/source/browse</url>
+    <connection>scm:git:git://github.com/neotyk/maven-overview-plugin.git</connection>
+    <url>scm:git:git://github.com/neotyk/maven-overview-plugin.git</url>
   </scm>
   <mailingLists>
     <mailingList>
