@@ -22,7 +22,7 @@ Report configuration example
     <configuration>
      <width>500</width>
      <height>500</height>
-     <includes>com.agilejava.maven.plugins, org.apache.maven.reporting, org.apache.maven.shared, jung, org.apache.maven.doxia, commons-collections, colt, concurrent</includes>
+     <includes>com.googlecode.maven-overview-plugin, org.apache.maven.reporting, org.apache.maven.shared, jung, org.apache.maven.doxia, commons-collections, colt, concurrent</includes>
      <exclusions>
       <exclusion>
        <scope>test</scope>
