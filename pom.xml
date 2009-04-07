@@ -428,13 +428,6 @@
         <role>developer</role>
       </roles>
     </developer>
-    <developer>
-      <id>markus.umefjord</id>
-      <name>Markus Umefjord</name>
-      <roles>
-        <role>developer</role>
-      </roles>
-    </developer>
   </developers>
   <inceptionYear>2008</inceptionYear>
   <organization>
@@ -448,7 +441,7 @@
   <ciManagement />
   <scm>
     <connection>scm:git:git://github.com/neotyk/maven-overview-plugin.git</connection>
-    <url>http://github.com/neotyk/maven-overview-plugin/tree/master</url>
+    <url>scm:git:git://github.com/neotyk/maven-overview-plugin.git</url>
   </scm>
   <mailingLists>
     <mailingList>
