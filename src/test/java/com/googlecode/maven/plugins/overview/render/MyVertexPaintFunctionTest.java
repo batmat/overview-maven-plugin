@@ -1,4 +1,4 @@
-package com.agilejava.maven.plugins.overview.render;
+package com.googlecode.maven.plugins.overview.render;
 
 import org.junit.Before;
 import org.junit.Test;import static org.junit.Assert.assertEquals;import static org.junit.Assert.assertNull;
@@ -7,7 +7,7 @@ import org.apache.maven.plugin.testing.stubs.ArtifactStub;
 import java.awt.*;
 
 import edu.uci.ics.jung.graph.impl.SimpleSparseVertex;
-import com.agilejava.maven.plugins.overview.vo.ArtifactVertex;
+import com.googlecode.maven.plugins.overview.vo.ArtifactVertex;
 
 /**
  * MyVertexPaintFunction test.

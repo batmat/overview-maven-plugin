@@ -1,4 +1,4 @@
-package com.agilejava.maven.plugins.overview.logic;
+package com.googlecode.maven.plugins.overview.logic;
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
@@ -8,7 +8,7 @@ import org.apache.maven.project.MavenProject;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.agilejava.maven.plugins.overview.Exclusion;
+import com.googlecode.maven.plugins.overview.Exclusion;
 
 /**
  * Artifact filtering.

@@ -3,7 +3,7 @@
     <plugins>
       <plugin>
         <artifactId>maven-overview-plugin</artifactId>
-        <groupId>com.agilejava.maven.plugins</groupId>
+        <groupId>com.googlecode.maven.plugins</groupId>
         <configuration>
           <width>900</width>
           <height>900</height>

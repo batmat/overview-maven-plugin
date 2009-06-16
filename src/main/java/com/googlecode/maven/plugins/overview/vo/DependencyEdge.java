@@ -1,4 +1,4 @@
-package com.agilejava.maven.plugins.overview.vo;
+package com.googlecode.maven.plugins.overview.vo;
 
 import edu.uci.ics.jung.graph.impl.DirectedSparseEdge;
 import edu.uci.ics.jung.graph.Vertex;

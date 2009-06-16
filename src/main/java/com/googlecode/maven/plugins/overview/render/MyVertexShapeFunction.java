@@ -1,4 +1,4 @@
-package com.agilejava.maven.plugins.overview.render;
+package com.googlecode.maven.plugins.overview.render;
 
 import edu.uci.ics.jung.graph.decorators.VertexShapeFunction;
 import edu.uci.ics.jung.graph.Vertex;
@@ -6,7 +6,7 @@ import edu.uci.ics.jung.graph.Vertex;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
-import com.agilejava.maven.plugins.overview.vo.ArtifactVertex;
+import com.googlecode.maven.plugins.overview.vo.ArtifactVertex;
 
 /**
  * Vertex shaping.

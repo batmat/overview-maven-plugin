@@ -1,4 +1,4 @@
-package com.agilejava.maven.plugins.overview.render;
+package com.googlecode.maven.plugins.overview.render;
 
 import junit.framework.TestCase;
 import org.junit.Test;
@@ -14,8 +14,8 @@ import edu.uci.ics.jung.utils.UserDataContainer;
 import java.util.Set;
 import java.util.Iterator;
 
-import com.agilejava.maven.plugins.overview.vo.DependencyEdge;
-import com.agilejava.maven.plugins.overview.vo.ArtifactVertex;
+import com.googlecode.maven.plugins.overview.vo.DependencyEdge;
+import com.googlecode.maven.plugins.overview.vo.ArtifactVertex;
 
 /**
  * MyEdgeStringer test

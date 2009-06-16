@@ -1,10 +1,10 @@
-package com.agilejava.maven.plugins.overview;
+package com.googlecode.maven.plugins.overview;
 
-import com.agilejava.maven.plugins.overview.logic.DependencyProcessor;
-import com.agilejava.maven.plugins.overview.render.MyEdgeStringer;
-import com.agilejava.maven.plugins.overview.render.MyVertexPaintFunction;
-import com.agilejava.maven.plugins.overview.render.MyVertexShapeFunction;
-import com.agilejava.maven.plugins.overview.render.MyVertexStringer;
+import com.googlecode.maven.plugins.overview.logic.DependencyProcessor;
+import com.googlecode.maven.plugins.overview.render.MyEdgeStringer;
+import com.googlecode.maven.plugins.overview.render.MyVertexPaintFunction;
+import com.googlecode.maven.plugins.overview.render.MyVertexShapeFunction;
+import com.googlecode.maven.plugins.overview.render.MyVertexStringer;
 import edu.uci.ics.jung.graph.DirectedGraph;
 import edu.uci.ics.jung.visualization.*;
 import edu.uci.ics.jung.visualization.contrib.KKLayout;

@@ -1,6 +1,6 @@
-package com.agilejava.maven.plugins.overview.render;
+package com.googlecode.maven.plugins.overview.render;
 
-import com.agilejava.maven.plugins.overview.vo.ArtifactVertex;
+import com.googlecode.maven.plugins.overview.vo.ArtifactVertex;
 import edu.uci.ics.jung.graph.impl.SimpleDirectedSparseVertex;
 import static junit.framework.Assert.assertEquals;
 import org.apache.maven.artifact.DefaultArtifact;
@@ -13,7 +13,7 @@ import org.junit.Test;
  * MyVertexStringer tests.
  *
  * @author Hubert Iwaniuk
- * @see com.agilejava.maven.plugins.overview.render.MyVertexStringer
+ * @see com.googlecode.maven.plugins.overview.render.MyVertexStringer
  * @since 1.2
  */
 public class MyVertexStringerTest {
@@ -28,7 +28,7 @@ public class MyVertexStringerTest {
 
   /**
    * getLabel: not
-   * {@link com.agilejava.maven.plugins.overview.vo.ArtifactVertex} parameter.
+   * {@link com.googlecode.maven.plugins.overview.vo.ArtifactVertex} parameter.
    */
   @Test public void getLabelNotArtifactVertex() {
     MyVertexStringer stringer = new MyVertexStringer(false);

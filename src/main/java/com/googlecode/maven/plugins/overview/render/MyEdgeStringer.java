@@ -1,6 +1,6 @@
-package com.agilejava.maven.plugins.overview.render;
+package com.googlecode.maven.plugins.overview.render;
 
-import com.agilejava.maven.plugins.overview.vo.DependencyEdge;
+import com.googlecode.maven.plugins.overview.vo.DependencyEdge;
 import edu.uci.ics.jung.graph.ArchetypeEdge;
 import edu.uci.ics.jung.graph.decorators.EdgeStringer;
 

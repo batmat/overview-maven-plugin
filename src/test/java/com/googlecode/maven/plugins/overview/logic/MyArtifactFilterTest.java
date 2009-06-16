@@ -1,6 +1,6 @@
-package com.agilejava.maven.plugins.overview.logic;
+package com.googlecode.maven.plugins.overview.logic;
 
-import com.agilejava.maven.plugins.overview.Exclusion;
+import com.googlecode.maven.plugins.overview.Exclusion;
 import junit.framework.TestCase;
 import org.apache.maven.artifact.DefaultArtifact;
 import org.apache.maven.artifact.handler.DefaultArtifactHandler;

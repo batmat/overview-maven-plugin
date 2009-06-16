@@ -121,10 +121,10 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-docck-plugin</artifactId>
-        <configuration>
+        <!--<configuration>-->
           <!-- Don't know how to make this plugin work in release:prepare. -->
-          <offline>true</offline>
-        </configuration>
+          <!--<offline>true</offline>-->
+        <!--</configuration>-->
         <executions>
           <execution>
             <goals>
@@ -230,7 +230,7 @@
           <width>500</width>
           <height>500</height>
           <suppressedScopes />
-          <includes>com.googlecode.maven-overview-plugin, org.apache.maven.reporting, org.apache.maven.shared, jung, org.apache.maven.doxia, commons-collections, colt, concurrent</includes>
+          <includes>com.googlecode.maven.plugins, org.apache.maven.reporting, org.apache.maven.shared, jung, org.apache.maven.doxia, commons-collections, colt, concurrent</includes>
           <exclusions>
             <exclusion>
               <scope>test</scope>
@@ -383,21 +383,37 @@
       </plugin>
     </plugins>
   </reporting>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>googlecode</id>
+      <url>http://oss.sonatype.org/content/groups/googlecode</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
   <distributionManagement>
     <site>
       <id>googlecode</id>
       <url>svn:https://maven-overview-plugin.googlecode.com/svn/site</url>
     </site>
-    <snapshotRepository>
-      <id>googlecode</id>
-      <url>svn:https://kungfoo-m2.googlecode.com/svn/snapshot-repo</url>
-    </snapshotRepository>
     <repository>
-      <id>googlecode</id>
-      <url>svn:https://kungfoo-m2.googlecode.com/svn/release-repo</url>
+      <id>googlecode-releases</id>
+      <name>Googlecode Release Repository</name>
+      <url>http://oss.sonatype.org/content/repositories/googlecode-releases/
+      </url>
     </repository>
+    <snapshotRepository>
+      <id>googlecode-snapshots</id>
+      <name>Googlecode Snapshot Repository</name>
+      <url>http://oss.sonatype.org/content/repositories/googlecode-snapshots/
+      </url>
+    </snapshotRepository>
   </distributionManagement>
- 
+
   <!-- More Project Information -->
   <name>Maven Overview Plugin</name>
   <description>

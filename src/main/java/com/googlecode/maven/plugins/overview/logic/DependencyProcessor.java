@@ -1,7 +1,7 @@
-package com.agilejava.maven.plugins.overview.logic;
+package com.googlecode.maven.plugins.overview.logic;
 
-import com.agilejava.maven.plugins.overview.vo.ArtifactVertex;
-import com.agilejava.maven.plugins.overview.Exclusion;
+import com.googlecode.maven.plugins.overview.vo.ArtifactVertex;
+import com.googlecode.maven.plugins.overview.Exclusion;
 import edu.uci.ics.jung.graph.DirectedGraph;
 import edu.uci.ics.jung.graph.impl.DirectedSparseGraph;
 import org.apache.maven.artifact.Artifact;

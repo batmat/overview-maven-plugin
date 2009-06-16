@@ -1,4 +1,4 @@
-package com.agilejava.maven.plugins.overview;
+package com.googlecode.maven.plugins.overview;
 
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 
