@@ -405,7 +405,7 @@
     <repository>
       <id>googlecode-releases</id>
       <name>Googlecode Release Repository</name>
-      <url>http://oss.sonatype.org/content/repositories/googlecode-releases/
+      <url>http://oss.sonatype.org/content/repositories/googlecode-snapshots/
       </url>
     </repository>
     <snapshotRepository>
