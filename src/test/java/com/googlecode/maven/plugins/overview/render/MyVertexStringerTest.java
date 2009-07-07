@@ -22,7 +22,7 @@ public class MyVertexStringerTest {
    * getLabel: null parameter.
    */
   @Test public void getLabelNullArtifact() {
-    MyVertexStringer stringer = new MyVertexStringer(false);
+    MyVertexStringer stringer = new MyVertexStringer(false, false);
     assertNull(stringer.getLabel(null));
   }
 
@@ -31,7 +31,7 @@ public class MyVertexStringerTest {
    * {@link com.googlecode.maven.plugins.overview.vo.ArtifactVertex} parameter.
    */
   @Test public void getLabelNotArtifactVertex() {
-    MyVertexStringer stringer = new MyVertexStringer(false);
+    MyVertexStringer stringer = new MyVertexStringer(false, false);
     assertNull(stringer.getLabel(new SimpleDirectedSparseVertex()));
   }
 
@@ -39,7 +39,7 @@ public class MyVertexStringerTest {
    * getLabel: short label.
    */
   @Test public void getLabelShort() {
-    MyVertexStringer stringer = new MyVertexStringer(false);
+    MyVertexStringer stringer = new MyVertexStringer(false, false);
     assertEquals(
         "a", stringer.getLabel(
         new ArtifactVertex(
@@ -54,7 +54,7 @@ public class MyVertexStringerTest {
    * getLabel: long label.
    */
   @Test public void getLabelLong() {
-    MyVertexStringer stringer = new MyVertexStringer(true);
+    MyVertexStringer stringer = new MyVertexStringer(true, false);
     assertEquals(
         "g:a:jar:1.0",
         stringer.getLabel(
@@ -66,4 +66,38 @@ public class MyVertexStringerTest {
                 1
             )));
   }
+
+    /**
+     * getLabel: Contains version
+     */
+    @Test public void getVersionedLabel() {
+        MyVertexStringer stringer = new MyVertexStringer(false, true);
+        assertEquals(
+            "a:1.0",
+            stringer.getLabel(
+                new ArtifactVertex(
+                    new DefaultArtifact(
+                        "g", "a", VersionRange.createFromVersion("1.0"), "test",
+                        "jar",
+                        "", new DefaultArtifactHandler()),
+                    1
+                )));
+    }
+
+    /**
+     * getLabel: make sure that if fullLabel and showVersion provided, fullLabel behavior is choosen.
+     */
+    @Test public void makeSureLongLabelOverridesVersioned() {
+        MyVertexStringer stringer = new MyVertexStringer(true, true);
+        assertEquals(
+            "g:a:jar:1.0",
+            stringer.getLabel(
+                new ArtifactVertex(
+                    new DefaultArtifact(
+                        "g", "a", VersionRange.createFromVersion("1.0"), "test",
+                        "jar",
+                        "", new DefaultArtifactHandler()),
+                    1
+                )));
+    }
 }

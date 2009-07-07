@@ -120,6 +120,15 @@ public class MavenOverviewMojo extends AbstractMavenReport {
   String suppressedScopes;
 
   /**
+   * Show version in graph.
+   *
+   * As <a href="http://code.google.com/p/maven-overview-plugin/issues/detail?id=16">requested</a>.
+   *
+   * @parameter expression="${showVersion}" default-value="false"
+   */
+  boolean showVersion = false;
+
+  /**
    * Directory where reports will go.
    *
    * @parameter expression="${project.reporting.outputDirectory}"
@@ -362,7 +371,7 @@ public class MavenOverviewMojo extends AbstractMavenReport {
 
   private PluggableRenderer setupRenderer() {
     PluggableRenderer renderer = new PluggableRenderer();
-    renderer.setVertexStringer(new MyVertexStringer(vertexFullLabel));
+    renderer.setVertexStringer(new MyVertexStringer(vertexFullLabel, showVersion));
     renderer.setVertexPaintFunction(new MyVertexPaintFunction());
     renderer.setVertexShapeFunction(new MyVertexShapeFunction());
     renderer.setVertexLabelCentering(true);
