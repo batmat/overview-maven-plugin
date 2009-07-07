@@ -4,7 +4,7 @@
   <!-- The Basics -->
   <groupId>com.googlecode.maven-overview-plugin</groupId>
   <artifactId>maven-overview-plugin</artifactId>
-  <version>1.6-SNAPSHOT</version>
+  <version>1.6</version>
   <packaging>maven-plugin</packaging>
  
   <prerequisites>
