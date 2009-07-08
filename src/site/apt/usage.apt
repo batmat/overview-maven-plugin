@@ -6,28 +6,13 @@
 		15 Jun 2008
 		---
 
-Installing
+Introduction
 
-  Add following to your pom.xml
+  This page describes how to install maven-overview-plugin.
 
-+---+
-  <pluginRepositories>
-    <pluginRepository>
-      <id>KungFoo M2 Release Repository</id>
-      <url>svn:https://kungfoo-m2.googlecode.com/svn/release-repo</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-    </pluginRepository>
-  </pluginRepositories>
-+---+
+Details
 
-  Plugin is also available in Maven Central Repository. Unfortunatelly googlecode infrastructure
-  doesn't support rsync, until it does, plugin releases will show in Central a bit later than in
-  KungFoo M2 Release Repository.
+  maven-overview-plugin is available from [http://repo1.maven.org/maven2/ Maven Central Repository].
 
 Usage
 
@@ -42,7 +27,7 @@ Usage
       <plugin>
         <groupId>com.googlecode.maven-overview-plugin</groupId>
         <artifactId>maven-overview-plugin</artifactId>
-        <version>1.4</version>
+        <version>RELEASE</version>
       </plugin>
     </plugins>
   </reporting>
@@ -53,7 +38,7 @@ Usage
   Execute following
 
 +---+
-mvn com.googlecode.maven-overview-plugin:maven-overview-plugin:1.4:overview
+mvn com.googlecode.maven-overview-plugin:maven-overview-plugin:RELEASE:overview
 +---+
   Overview graph will be generated in target/site/images/overview.png
 
