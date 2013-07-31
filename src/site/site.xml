@@ -3,9 +3,9 @@
   <body>
     <links>
       <item name="Source Tree"
-            href="http://github.com/neotyk/maven-overview-plugin/tree/master"/>
+            href="http://github.com/neotyk/overview-maven-plugin/tree/master"/>
       <item name="Maven Overview Plugin"
-            href="http://code.google.com/p/maven-overview-plugin/"/>
+            href="http://code.google.com/p/overview-maven-plugin/"/>
       <item name="Maven 2" href="http://maven.apache.org/"/>
     </links>
 

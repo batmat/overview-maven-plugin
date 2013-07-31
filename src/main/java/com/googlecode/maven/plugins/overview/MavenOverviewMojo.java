@@ -122,7 +122,7 @@ public class MavenOverviewMojo extends AbstractMavenReport {
   /**
    * Show version in graph.
    *
-   * As <a href="http://code.google.com/p/maven-overview-plugin/issues/detail?id=16">requested</a>.
+   * As <a href="http://code.google.com/p/overview-maven-plugin/issues/detail?id=16">requested</a>.
    *
    * @parameter expression="${showVersion}" default-value="false"
    */

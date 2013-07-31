@@ -5,8 +5,8 @@
             <question>Question?</question>
             <answer>
                 <p>
-                    You can ask us question usign our <a href="http://code.google.com/p/maven-overview-plugin/issues/list">issue tracker</a>,
-                    or <a href="http://groups.google.com/group/maven-overview-plugin-discuss">User List</a>.
+                    You can ask us question usign our <a href="http://code.google.com/p/overview-maven-plugin/issues/list">issue tracker</a>,
+                    or <a href="http://groups.google.com/group/overview-maven-plugin-discuss">User List</a>.
                 </p>
             </answer>
         </faq>

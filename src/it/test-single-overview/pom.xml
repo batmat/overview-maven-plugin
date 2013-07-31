@@ -19,8 +19,8 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>com.googlecode.maven-overview-plugin</groupId>
-        <artifactId>maven-overview-plugin</artifactId>
+        <groupId>com.googlecode.overview-maven-plugin</groupId>
+        <artifactId>overview-maven-plugin</artifactId>
         <version>testing</version>
         <configuration>
           <width>200</width>

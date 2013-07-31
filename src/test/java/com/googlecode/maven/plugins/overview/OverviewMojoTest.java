@@ -187,7 +187,7 @@ public class OverviewMojoTest extends AbstractMojoTestCase {
           getBasedir(),
           "target/test-classes/unit/overview-basic-test/plugin-config-empty-exclusions.xml");
         MavenOverviewMojo mojo = (MavenOverviewMojo) lookupMojo(
-          "overview", testPom);
+			"overview", testPom);
         assertNotNull(mojo);
         assertEquals(
           "Width should be set to value from test configuration.",

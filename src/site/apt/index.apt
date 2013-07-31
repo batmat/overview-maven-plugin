@@ -15,7 +15,7 @@ Maven Overview Plugin
 
   The Overview Plugin has one goal:
 
-  * {{{overview-mojo.html}maven-overview-plugin:overview}} Generates graph of project dependencies.
+  * {{{overview-mojo.html}overview-maven-plugin:overview}} Generates graph of project dependencies.
 
 * Usage
 

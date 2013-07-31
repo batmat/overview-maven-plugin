@@ -3,8 +3,8 @@
     <build>
         <plugins>
             <plugin>
-                <artifactId>maven-overview-plugin</artifactId>
-                <groupId>com.googlecode.maven.plugins</groupId>
+                <artifactId>overview-maven-plugin</artifactId>
+                <groupId>com.googlecode.overview-maven-plugin</groupId>
                 <configuration>
                     <width>900</width>
                     <height>900</height>
