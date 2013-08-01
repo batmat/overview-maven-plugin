@@ -16,12 +16,20 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  <reporting>
-    <plugins>
-      <plugin>
-        <groupId>com.googlecode.overview-maven-plugin</groupId>
-        <artifactId>overview-maven-plugin</artifactId>
-        <version>testing</version>
+  <build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.3</version>
+			</plugin>
+		</plugins>
+	</build>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>@project.groupId@</groupId>
+				<artifactId>@project.artifactId@</artifactId>
+				<version>@project.version@</version>
         <configuration>
           <width>200</width>
           <height>200</height>

@@ -163,16 +163,29 @@
         </executions>
       </plugin>
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>shitty-maven-plugin</artifactId>
-        <version>1.0-alpha-3</version>
+        <artifactId>maven-invoker-plugin</artifactId>
+        <configuration>
+          <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
+          <showErrors>true</showErrors>
+          <streamLogs>true</streamLogs>
+          <settingsFile>src/it/settings.xml</settingsFile>
+          <postBuildHookScript>validate</postBuildHookScript>
+          <addTestClassPath>true</addTestClassPath>
+          <filterProperties>
+            <enforcerPluginVersion>${enforcerPluginVersion}</enforcerPluginVersion>
+          </filterProperties>
+        </configuration>
         <executions>
           <execution>
+            <id>integration-test</id>
             <goals>
-              <goal>clean</goal>
               <goal>install</goal>
-              <goal>test</goal>
+              <goal>run</goal>
             </goals>
+            <configuration>
+              <streamLogs>false</streamLogs>
+              <debug>true</debug>
+            </configuration>
           </execution>
         </executions>
       </plugin>
