@@ -102,6 +102,7 @@
       <plugins>
         <plugin>
           <artifactId>maven-site-plugin</artifactId>
+          <version>3.3</version>
           <configuration>
             <stagingSiteURL>
               svn:https://overview-maven-plugin.googlecode.com/svn/site/staging/${project.artifactId}-${project.version}
