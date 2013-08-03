@@ -246,9 +246,11 @@
         <artifactId>maven-jxr-plugin</artifactId>
         <version>2.3</version>
       </plugin>
+      <!--
       <plugin>
-        <groupId>com.googlecode.maven-overview-plugin</groupId>
-        <artifactId>maven-overview-plugin</artifactId>
+        <groupId>com.googlecode.overview-maven-plugin</groupId>
+        <artifactId>overview-maven-plugin</artifactId>
+        <version>${project.version}</version>
         <configuration>
           <width>500</width>
           <height>500</height>
@@ -261,6 +263,7 @@
           </exclusions>
         </configuration>
       </plugin>
+    -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
