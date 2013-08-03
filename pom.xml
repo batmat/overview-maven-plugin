@@ -170,6 +170,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-invoker-plugin</artifactId>
+        <version>1.8</version>
         <configuration>
           <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
           <showErrors>true</showErrors>
