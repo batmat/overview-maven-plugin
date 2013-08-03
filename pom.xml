@@ -125,6 +125,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-docck-plugin</artifactId>
+        <version>1.0</version>
         <!--<configuration>-->
           <!-- Don't know how to make this plugin work in release:prepare. -->
           <!--<offline>true</offline>-->
